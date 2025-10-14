@@ -56,7 +56,11 @@ class _FirebreathingRecoveryScreenState
 
     return BlocConsumer<FirebreathingCubit, FirebreathingState>(
       listener: (context, state) {
-       
+       if (state is FirebreathingPaused) {
+          countdownController.pause();
+        } else if (state is FirebreathingResumed) {
+          countdownController.resume();
+        } 
       },
       builder: (context, state) {
         return PopScope(
