@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => PyramidCubit(audioOrchestrator)),
-        // BlocProvider(create: (context) => FirebreathingCubit(audioOrchestrator)),
+        BlocProvider(create: (context) => FirebreathingCubit(audioOrchestrator)),
         // BlocProvider(create: (context) => DnaCubit()),
         // BlocProvider(create: (context) => PinealCubit()),
       ],

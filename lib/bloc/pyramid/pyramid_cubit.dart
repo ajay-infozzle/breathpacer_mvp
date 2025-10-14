@@ -282,7 +282,8 @@ class PyramidCubit extends Cubit<PyramidState> {
       breathCount--;
       if (breathCount != 0) {
         emit(PyramidBreathingPhase(phase: "in", remainingBreaths: breathCount));
-        currentBreathing = BreathHoldChoice.breatheIn.name ;
+        // currentBreathing = BreathHoldChoice.breatheIn.name ;
+        currentBreathing = 'Breath in' ;
       }
       else{
         currentBreathing = 'Hold Time' ;
@@ -294,15 +295,20 @@ class PyramidCubit extends Cubit<PyramidState> {
 
     if (status == AnimationStatus.forward && value > 0.98 && !hasIncreased) {
       // exhale finished
-      if(breathHoldIndex == 1 && breathCount == 1){
-        currentBreathing = 'Hold Time' ;
-        emit(PyramidHold());
-      }else{
-        emit(PyramidBreathingPhase(phase: "out", remainingBreaths: breathCount));
-        currentBreathing = BreathHoldChoice.breatheOut.name ;
-      }
-      // emit(PyramidBreathingPhase(phase: "out", remainingBreaths: breathCount));
-      // currentBreathing = BreathHoldChoice.breatheOut.name ;
+      if (breathCount == 0) return;
+      
+      // if(breathHoldIndex == 1 && breathCount == 1){
+      //   currentBreathing = 'Hold Time' ;
+      //   emit(PyramidHold());
+      // }else{
+      //   emit(PyramidBreathingPhase(phase: "out", remainingBreaths: breathCount));
+      //   // currentBreathing = BreathHoldChoice.breatheOut.name ;
+      //   currentBreathing = 'Breath out' ;
+      // }
+
+      emit(PyramidBreathingPhase(phase: "out", remainingBreaths: breathCount));
+      currentBreathing = 'Breath out' ;
+
       hasIncreased = true; 
     }
 

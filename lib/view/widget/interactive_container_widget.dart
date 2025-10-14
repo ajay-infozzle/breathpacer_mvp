@@ -1,4 +1,6 @@
+import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
+import 'package:breathpacer_mvp/view/fireBreathing/widget/fire_saved_works_dialog_widget.dart';
 import 'package:breathpacer_mvp/view/pyramidBreathing/widget/pyramid_saved_works_dialog_widget.dart';
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -114,9 +116,9 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
       case 0:
         total = context.read<PyramidCubit>().savedBreathwork.length;
         break;
-      // case 1:
-      //   total = context.read<FirebreathingCubit>().savedBreathwork.length; 
-      //   break;
+      case 1:
+        total = context.read<FirebreathingCubit>().savedBreathwork.length; 
+        break;
       // case 2:
       //   total = context.read<DnaCubit>().savedBreathwork.length; 
       //   break;
@@ -164,8 +166,8 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
     switch (widget.index) {
       case 0:
         return const PyramidSavedWorksDialogWidget();
-      // case 1:
-      //   return const FirebreathingSavedWorksDialogWidget();
+      case 1:
+        return const FirebreathingSavedWorksDialogWidget();
       // case 2:
       //   return const DnaSavedWorkDialogWidget();
       // case 3:

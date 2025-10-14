@@ -15,12 +15,9 @@ class AudioOrchestrator {
 
   // ---------- Play Methods ----------
   Future<void> playMusic(String assetPath, {bool loop = true}) async {
-    print("play music start");
     final player = _players[AudioChannel.music]!;
     await player.setAudioSource(AudioSource.asset(assetPath), preload: true);
-    print("music asset set");
     if (loop) await player.setLoopMode(LoopMode.one);
-    print("music loop set");
     await player.play();
   }
 

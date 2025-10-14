@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 class PyramidBreathingScreen extends StatefulWidget {
   const PyramidBreathingScreen({super.key});
@@ -25,7 +27,10 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
   late Timer _timer;
   int _startTime = 0;
   int breathingRoundTime = 0;
+  bool showCountdown = false;
   StreamSubscription? _cubitSubscription;
+
+  late CountdownController countdownController;
 
   @override
   void initState() {
@@ -53,6 +58,7 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
 
     setUpAnimation();
     startTimer();
+    countdownController = CountdownController(autoStart: false);
   }
 
   void startTimer() {
@@ -63,26 +69,31 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
         log(">> $_startTime : ${Duration(milliseconds: breathingRoundTime).inSeconds - _startTime}");
 
         //~ ----------- play motivation -------------
-        if(Duration(milliseconds: breathingRoundTime).inSeconds > 25 && (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) > 9 ){
-          if(_startTime % 11 == 0){
-            context.read<PyramidCubit>().playMotivation();
-          }
-        }
+        // if(Duration(milliseconds: breathingRoundTime).inSeconds > 25 && (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) > 9 ){
+        //   if(_startTime % 11 == 0){
+        //     context.read<PyramidCubit>().playMotivation();
+        //   }
+        // }
+
+        // final midTime = (Duration(milliseconds: breathingRoundTime).inSeconds / 2).ceil() ;
+        // if( _startTime == midTime && (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) > 9 ){
+        //   context.read<PyramidCubit>().playMotivation();
+        // }
         //~ ----------- play motivation end ----------- 
 
 
-        if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 5){
-          context.read<PyramidCubit>().playExtra(GuideTrack.getReadyTohold.path);
-        }
-        else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 3){
-          context.read<PyramidCubit>().playExtra(GuideTrack.three.path);
-        }
-        else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 2){
-          context.read<PyramidCubit>().playExtra(GuideTrack.two.path);
-        }
-        else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 1){
-          context.read<PyramidCubit>().playExtra(GuideTrack.one.path);
-        }
+        // if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 5){
+        //   context.read<PyramidCubit>().playExtra(GuideTrack.getReadyTohold.path);
+        // }
+        // else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 3){
+        //   context.read<PyramidCubit>().playExtra(GuideTrack.three.path);
+        // }
+        // else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 2){
+        //   context.read<PyramidCubit>().playExtra(GuideTrack.two.path);
+        // }
+        // else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 1){
+        //   context.read<PyramidCubit>().playExtra(GuideTrack.one.path);
+        // }
       });
     });
   }
@@ -128,7 +139,7 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
       cubit.breathingWork(_controller.status, _animation.value);
     });
 
-    _cubitSubscription = cubit.stream.listen((state) {
+    _cubitSubscription = cubit.stream.listen((state) async{
       try {
           if(state is PyramidBreathingPhase){
             if(state.phase == "in"){
@@ -144,11 +155,18 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
             _controller.repeat(reverse: true);
             startTimer();
           } else if (state is PyramidHold) {
-            _controller.reset();
+            context.read<PyramidCubit>().playChime();
+            _controller.stop();
             stopTimer();
             storeScreenTime();
-            context.read<PyramidCubit>().playChime();
-            context.goNamed(RoutesName.pyramidBreathHoldScreen);
+        
+            await context.read<PyramidCubit>().playExtra(GuideTrack.getReadyTohold.path);
+            setState(() {
+              showCountdown = true;
+            });
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              countdownController.start();
+            });
           }
       } on Exception catch (e) {
         log(">>breath work ${e.toString()}");
@@ -270,6 +288,7 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
 
                         SizedBox(height: height*0.05,),
 
+                        !showCountdown ?
                         AnimatedBuilder(
                           animation: _controller,
                           builder: (context, child) {
@@ -295,6 +314,57 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
                               )
                             );
                           }
+                        )
+                        :
+                        Container(
+                          width: size,
+                          margin: EdgeInsets.symmetric(horizontal: size*0.12),
+                          height: size-2*(size*0.12),
+                          alignment: Alignment.center,
+                          child: ClipPath(
+                            clipper: OctagonalClipper(),
+                            child: Container(
+                              height: size-2*(size*0.12),
+                              color: AppTheme.colors.blueNotChosen.withOpacity(.3),
+                              child: Center(
+                                child: Countdown(
+                                  controller: countdownController,
+                                  seconds: 3,
+                                  build: (BuildContext context, double time) {
+                                    context.read<PyramidCubit>().playCount(time.toString().split(".").first);
+                                    if(time.toString().split(".").first == '0'){
+                                      context.read<PyramidCubit>().playExtra(
+                                        context.read<PyramidCubit>().breathHoldIndex == 0
+                                        ? GuideTrack.singleBreathIn.path
+                                        : GuideTrack.singleBreathOut.path
+                                      );
+                                    }
+
+                                    return Text(
+                                      time.toString().split(".").first,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size*0.2
+                                      ),
+                                    );
+                                  },
+                                  interval: const Duration(seconds: 1),
+                                  onFinished: () async{
+                                    // await context.read<PyramidCubit>().playExtra(
+                                    //   context.read<PyramidCubit>().breathHoldIndex == 0
+                                    //   ? GuideTrack.singleBreathIn.path
+                                    //   : GuideTrack.singleBreathOut.path
+                                    // );
+                                    _controller.reset();
+                                    context.read<PyramidCubit>().playChime();
+                                    Future.delayed(Duration(milliseconds: 700),() {
+                                      context.goNamed(RoutesName.pyramidBreathHoldScreen);
+                                    },);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
 
                         SizedBox(height: height*0.04,),

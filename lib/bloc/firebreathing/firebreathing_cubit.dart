@@ -82,6 +82,7 @@ class FirebreathingCubit extends Cubit<FirebreathingState> {
     isReatartEnable = false;
     recoveryBreath = false;
     holdingPeriod = false;
+    paused = false;
 
     currentSet = 0;
     breathingTimeList.clear();
@@ -289,9 +290,9 @@ class FirebreathingCubit extends Cubit<FirebreathingState> {
   }
 
   void updateRound(){
-    // if(currentRound < int.parse(step??"0") ){
-    //   currentRound += currentRound ;
-    // }
+    if(currentSet < noOfSets ){
+      currentSet = currentSet + 1;
+    }
   }
 
   // void playHold() async {

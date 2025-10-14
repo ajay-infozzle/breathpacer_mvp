@@ -53,12 +53,17 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
         }else{
 
           //~ ----------- play motivation -------------
-          if(context.read<PyramidCubit>().holdDuration >= 20 && (context.read<PyramidCubit>().holdDuration - _startTime) > 9 ){
-            if(_startTime % 10 == 0){
+          // if(context.read<PyramidCubit>().holdDuration >= 20 && (context.read<PyramidCubit>().holdDuration - _startTime) > 9 ){
+          //   if(_startTime % 10 == 0){
+          //     // context.read<PyramidCubit>().playMotivation();
+          //     context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
+          //   }
+          if( context.read<PyramidCubit>().holdDuration > 10 && (context.read<PyramidCubit>().holdDuration / 2).ceil()  == (context.read<PyramidCubit>().holdDuration - _startTime) ){
               context.read<PyramidCubit>().playMotivation();
-            }
+              // context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
           }
           //~ ----------- play motivation end ----------- 
+
 
           //~ to start last audios
           playLastAudios();
@@ -117,15 +122,21 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
   }
 
   void storeScreenTime() {
-    if (context.read<PyramidCubit>().breathHoldIndex == 0 ||
-        context.read<PyramidCubit>().breathHoldIndex == 2) {
-      context.read<PyramidCubit>().holdInbreathTimeList.add(
-        _startTime - 1 < 0 ? 0 : _startTime - 1,
-      ); //~ -1 is added due to starttime auto increased 1 sec more
+    final cubit = context.read<PyramidCubit>();
+    if (cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2) {
+      // context.read<PyramidCubit>().holdInbreathTimeList.add(
+      //   _startTime - 1 < 0 ? 0 : _startTime - 1,
+      // ); //~ -1 is added due to starttime auto increased 1 sec more
+      cubit.holdInbreathTimeList.add(
+        cubit.holdDuration
+      ); 
     } else {
-      context.read<PyramidCubit>().holdBreathoutTimeList.add(
-        _startTime - 1 < 0 ? 0 : _startTime - 1,
-      ); //~ -1 is added due to starttime auto increased 1 sec more
+      // context.read<PyramidCubit>().holdBreathoutTimeList.add(
+      //   _startTime - 1 < 0 ? 0 : _startTime - 1,
+      // ); //~ -1 is added due to starttime auto increased 1 sec more
+      cubit.holdBreathoutTimeList.add(
+        cubit.holdDuration
+      ); 
     }
 
     if (kDebugMode) {
@@ -310,98 +321,7 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     String minutesStr = minutes.toString().padLeft(2, '0');
     String secondsStr = seconds.toString().padLeft(2, '0');
 
-    // //~ to start motivation
-    // if(context.read<PyramidCubit>().holdDuration >= 20){
-    //   if(time % 11 == 0 && time.toDouble() != context.read<PyramidCubit>().holdDuration && (context.read<PyramidCubit>().holdDuration - time) > 7 && int.parse(secondsStr) > 6){
-    //     context.read<PyramidCubit>().playHoldMotivation();
-    //   }
-    // }
-    // // if(context.read<PyramidCubit>().holdDuration >= 30){
-    // //   if(time % 15 == 0 && time.toDouble() != context.read<PyramidCubit>().holdDuration && (context.read<PyramidCubit>().holdDuration - time) > 10 && int.parse(secondsStr) > 6){
-    // //     context.read<PyramidCubit>().playHoldMotivation();
-    // //   }
-    // // }
-
-    // //~ to start 3_2_1 voice
-    // bool isLastRound = false;
-    // if(context.read<PyramidCubit>().step == context.read<PyramidCubit>().currentRound.toString()){
-    //   isLastRound = true;
-    // }
-    // if(secondsStr == "02"  && context.read<PyramidCubit>().choiceOfBreathHold != "Both"){
-    //   context.read<PyramidCubit>().playHoldCountdown(isLastRound: isLastRound);
-    // }
-    // else if(secondsStr == "02" && context.read<PyramidCubit>().choiceOfBreathHold == "Both" && context.read<PyramidCubit>().breathHoldIndex == 0){
-    //   context.read<PyramidCubit>().playHoldCountdown(isBoth: true, isLastRound: isLastRound);
-    // }
-    // else if(secondsStr == "02" && context.read<PyramidCubit>().choiceOfBreathHold == "Both" && context.read<PyramidCubit>().breathHoldIndex != 0){
-    //   context.read<PyramidCubit>().playHoldCountdown(isBoth: true, isLastRound: isLastRound);
-    // }
-    // // if(secondsStr == "06" && context.read<PyramidCubit>().holdDuration != 10){
-    // //   context.read<PyramidCubit>().playHoldCountdown();
-    // // }
-    // // if(secondsStr == "06" && context.read<PyramidCubit>().holdDuration == 10){
-    // //   context.read<PyramidCubit>().playHoldCountdown();
-    // // }
-
     return "$minutesStr:$secondsStr";
   }
-
-  // String generateTapText(PyramidCubit cubit) {
-  //   if(cubit.choiceOfBreathHold == "Both" && cubit.breathHoldIndex == 0){
-  //     return "Tap to hold ${cubit.breathHoldList[1]}";
-  //   }
-  //   else{
-  //     // if(cubit.recoveryBreath){
-  //     if(1 > 2){
-  //       return "Tap to go to recovery breath";
-  //     }else{
-  //       if(cubit.step == cubit.currentRound.toString() ){
-  //         return "Tap to finish";
-  //       }else{
-  //         return "Tap to go to next set";
-  //       }
-  //     }
-  //   }
-  // }
-
-  // void navigate(PyramidCubit cubit) async{
-  //   if(cubit.choiceOfBreathHold == "Both" && cubit.breathHoldIndex == 0){
-  //     cubit.breathHoldIndex = 1;
-  //     context.read<PyramidCubit>().stopHold();
-
-  //     // context.read<PyramidCubit>().playTimeToHoldOutBreath();
-  //     await Future.delayed(const Duration(seconds: 0), () {
-  //       // context.read<PyramidCubit>().playHold();
-  //       context.read<PyramidCubit>().playTimeToHoldOutBreath();
-  //       context.pushReplacementNamed(RoutesName.pyramidBreathHoldScreen);
-  //     },);
-  //   }
-  //   else{
-  //     cubit.stopHold();
-  //     if(1 > 2){
-  //       // context.read<PyramidCubit>().playRecovery();
-  //       // context.goNamed(RoutesName.dnaRecoveryScreen);
-  //     }else{
-  //       if(cubit.step == cubit.currentRound.toString()){
-  //         cubit.stopMusic();
-  //         cubit.stopJerry();
-  //         cubit.playChime();
-
-  //         if (kDebugMode) {
-  //           print("pyramid rounds finished");
-  //         }
-  //         context.goNamed(RoutesName.pyramidSuccessScreen);
-  //       }else{
-  //         // cubit.currentRound = cubit.currentRound+1;
-  //         // cubit.resetJerryVoiceAndPLayAgain();
-
-  //         // context.read<PyramidCubit>().playTimeToNextSet();
-  //         await Future.delayed(const Duration(seconds: 0), () {
-  //           cubit.currentRound = cubit.currentRound+1;
-  //           context.goNamed(RoutesName.pyramidBreathingScreen);
-  //         },);
-  //       }
-  //     }
-  //   }
-  // }
+  
 }

@@ -1,7 +1,10 @@
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/view/disclamer_widget.dart';
+import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_hold_screen.dart';
+import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_recovery_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_setting_screen.dart';
+import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_success_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_waiting_screen.dart';
 import 'package:breathpacer_mvp/view/interactive_breathing.dart';
 import 'package:breathpacer_mvp/view/pyramidBreathing/breathing_step_guide_screen.dart';
@@ -220,42 +223,42 @@ class AppRoutes {
           //   },
           // ),
 
-          // GoRoute(
-          //   path: RoutesName.fireBreathingHoldScreen,
-          //   name: RoutesName.fireBreathingHoldScreen,
-          //   pageBuilder: (context, state) {
-          //     return customPageRouteBuilder(
-          //       const FirebreathingHoldScreen(),
-          //       state.pageKey, 
-          //       transitionDuration: const Duration(milliseconds: 500)
-          //     );
-          //   },
-          // ),
+          GoRoute(
+            path: RoutesName.fireBreathingHoldScreen,
+            name: RoutesName.fireBreathingHoldScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const FirebreathingHoldScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
 
-          // GoRoute(
-          //   path: RoutesName.fireBreathingRecoveryScreen,
-          //   name: RoutesName.fireBreathingRecoveryScreen,
-          //   pageBuilder: (context, state) {
-          //     return customPageRouteBuilder(
-          //       const FirebreathingRecoveryScreen(),
-          //       state.pageKey, 
-          //       transitionDuration: const Duration(milliseconds: 500)
-          //     );
-          //   },
-          // ),
+          GoRoute(
+            path: RoutesName.fireBreathingRecoveryScreen,
+            name: RoutesName.fireBreathingRecoveryScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const FirebreathingRecoveryScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
 
-          // GoRoute(
-          //   path: RoutesName.fireBreathingSuccessScreen,
-          //   name: RoutesName.fireBreathingSuccessScreen,
-          //   pageBuilder: (context, state) {
-          //     return customPageRouteBuilder(
-          //       const FirebreathingSuccessScreen(),
-          //       state.pageKey, 
-          //       transitionDuration: const Duration(milliseconds: 500)
-          //     );
-          //   },
-          // ),
-          // ----- firebreathing routes -----
+          GoRoute(
+            path: RoutesName.fireBreathingSuccessScreen,
+            name: RoutesName.fireBreathingSuccessScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const FirebreathingSuccessScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+          // ----- firebreathing routes end -----
 
         ] 
       ),

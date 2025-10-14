@@ -4,11 +4,11 @@ const interactionOptions = [
     "image": "assets/images/pyramid_icon.png",
     "description": "Discover relaxation and mental clarity with Pyramid Breathing. Choose from two easy options—12-9-6-3 or 12-6 breathing patterns—to calm your mind and boost focus, anytime, anywhere.",
   },
-  // {
-  //   "title": "Fire Breathing",
-  //   "image": "assets/images/fire_icon.png",
-  //   "description": "Release toxins and chemicals from the cells in your body. Enhance mental clarity. Start your day with this powerful activator.  Do it anytime you need a boost of energy. Fire Breathing is an intense rapid breathing exercises done through the nose.  Inhale deeply through your nose and exhale forcefully through your nose in a continuous steady pace.  At the end of the set hold your breath and recover",
-  // },
+  {
+    "title": "Fire Breathing",
+    "image": "assets/images/fire_icon.png",
+    "description": "Release toxins and chemicals from the cells in your body. Enhance mental clarity. Start your day with this powerful activator.  Do it anytime you need a boost of energy. Fire Breathing is an intense rapid breathing exercises done through the nose.  Inhale deeply through your nose and exhale forcefully through your nose in a continuous steady pace.  At the end of the set hold your breath and recover.",
+  },
   // {
   //   "title": "DNA Breathing",
   //   "image": "assets/images/dna_icon.png",
@@ -120,12 +120,24 @@ enum GuideTrack{
   getReadyToBreathOut("${audioAssetFile}ready_to_breath_out.mp3"), 
   nowHold("${audioAssetFile}now_hold.mp3"),
   relax("${audioAssetFile}relax.mp3"),
-  firebreathing("${audioAssetFile}firebreathing.mp3"),
   firebreathingPinealStart("${audioAssetFile}firebreathing_pineal_start.mp3"),
   firebreathingStart("${audioAssetFile}firebreathing_start.mp3"),
-  timeToNextSet("${audioAssetFile}time_to_next_set.mp3"),
+  firebreathing("${audioAssetFile}firebreathing.mp3"),
+  firebreathingPineal("${audioAssetFile}firebreathing_pineal.mp3"),
+  getReadyToRecover("${audioAssetFile}ready_to_recover.mp3"),
+  getReadyForNextSet("${audioAssetFile}ready_for_next_set.mp3"),
+  nowRecover("${audioAssetFile}now_recover.mp3"),
+  timeToNextSet("${audioAssetFile}time_to_next_set.mp3"), //Todo: change
+  minToGo6("${audioAssetFile}6_min_to_go.mp3"),
+  minToGo5("${audioAssetFile}5_min_to_go.mp3"),
+  minToGo4("${audioAssetFile}4_min_to_go.mp3"),
+  minToGo3("${audioAssetFile}3_min_to_go.mp3"),
+  minToGo2("${audioAssetFile}2_min_to_go.mp3"),
+  minToGo1("${audioAssetFile}1_min_to_go.mp3"),
   secToGo30("${audioAssetFile}30_sec_to_go.mp3"),
   secToGo15("${audioAssetFile}15_sec_to_go.mp3"),
+  secToGo5("${audioAssetFile}5_sec_to_go.mp3"),
+  noRegret("${audioAssetFile}no_regret.mp3"),
   motivation_1("${audioAssetFile}motivation_1.mp3"),
   motivation_2("${audioAssetFile}motivation_2.mp3"), //Todo: change
   motivation_3("${audioAssetFile}motivation_3.mp3");
@@ -144,6 +156,9 @@ enum ImagePath{
   musicImage("${imageAssetFile}music.png"),
   chimeImage("${imageAssetFile}chime.png"),
   fireIcon("${imageAssetFile}fire_icon.png"),
+  breathHoldIcon("${imageAssetFile}breath_hold.png"),
+  recoveryBreathIcon("${imageAssetFile}recovery_breath.png"),
+  recoveryIcon("${imageAssetFile}recovery.png"),
   completionIcon("${imageAssetFile}completion_icon.png");
 
   final String path;
