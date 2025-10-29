@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:developer';
 
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
+import 'package:breathpacer_mvp/config/services/audio_services.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:flutter/foundation.dart';
@@ -108,7 +111,11 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
         cubit.playExtra(GuideTrack.singleBreathOut.path);
       }
       else if(cubit.breathHoldIndex == 1) {
-        cubit.playExtra(GuideTrack.singleBreathIn.path);
+        //~ only pay for last round
+        if(cubit.step == cubit.currentRound.toString()){
+          cubit.playExtra(GuideTrack.singleBreathIn.path);
+        }
+        // cubit.playExtra(GuideTrack.singleBreathIn.path);
       }
     }
   }
@@ -278,8 +285,10 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
                                   if(context.read<PyramidCubit>().choiceOfBreathHold == BreathHoldChoice.both.name && context.read<PyramidCubit>().breathHoldIndex == 0){
                                     context.read<PyramidCubit>().breathHoldIndex = 1;
                                     context.pushReplacementNamed(RoutesName.pyramidBreathHoldScreen);
+                                    context.read<PyramidCubit>().playChime();
                                   }else{
-                                    context.goNamed(RoutesName.waitingAfterHoldScreen);
+                                    // context.goNamed(RoutesName.waitingAfterHoldScreen);
+                                    navigate(context.read<PyramidCubit>());
                                   }
                                   // context.goNamed(RoutesName.waitingAfterHoldScreen);
                                 },
@@ -322,6 +331,42 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     String secondsStr = seconds.toString().padLeft(2, '0');
 
     return "$minutesStr:$secondsStr";
+  }
+
+
+  //~ inplace of waiting screen after hold when countdown fineshed
+  void navigate(PyramidCubit cubit) async{
+    if(cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0){
+      cubit.breathHoldIndex = 1;
+      context.read<PyramidCubit>().audio.stop(AudioChannel.voice);
+      
+      // context.read<PyramidCubit>().playTimeToHoldOutBreath();
+
+      await Future.delayed(const Duration(seconds: 0), () {
+        // context.read<PyramidCubit>().playHold();
+        // context.read<PyramidCubit>().playTimeToHoldOutBreath();
+        context.read<PyramidCubit>().playChime();
+        context.pushReplacementNamed(RoutesName.pyramidBreathHoldScreen);
+      },);
+    } 
+    else{
+      if(cubit.step == cubit.currentRound.toString()){
+        await context.read<PyramidCubit>().audio.stopAll();
+        context.read<PyramidCubit>().playChime();
+
+
+        if (kDebugMode) {
+          print("pyramid rounds finished");
+        }
+        context.goNamed(RoutesName.pyramidSuccessScreen);
+      }else{
+        await Future.delayed(const Duration(seconds: 0), () {
+          context.read<PyramidCubit>().updateRound();
+          context.read<PyramidCubit>().playChime();
+          context.goNamed(RoutesName.pyramidBreathingScreen);
+        },);
+      }
+    }
   }
   
 }

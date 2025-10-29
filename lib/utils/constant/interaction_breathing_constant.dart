@@ -86,8 +86,8 @@ enum BreathSpeedDuration {
 }
 
 enum BreathHoldChoice { 
-  breatheIn("Breathe in"),
-  breatheOut("Breathe out"),
+  breatheIn("Breath in"),
+  breatheOut("Breath out"),
   both("Both");
 
   final String name;
@@ -140,6 +140,7 @@ enum GuideTrack{
   noRegret("${audioAssetFile}no_regret.mp3"),
   motivation_1("${audioAssetFile}motivation_1.mp3"),
   motivation_2("${audioAssetFile}motivation_2.mp3"), //Todo: change
+  motivation_2_1("${audioAssetFile}motivation_2_1.mp3"), 
   motivation_3("${audioAssetFile}motivation_3.mp3");
 
   final String path;

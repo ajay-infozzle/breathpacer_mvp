@@ -128,7 +128,7 @@ class _WaitingAfterHoldScreenState extends State<WaitingAfterHoldScreen> {
     );
   }
   
-   void navigate(PyramidCubit cubit) async{
+  void navigate(PyramidCubit cubit) async{
     if(cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0){
       cubit.breathHoldIndex = 1;
       context.read<PyramidCubit>().audio.stop(AudioChannel.voice);

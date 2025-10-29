@@ -94,6 +94,10 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
         // else if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 1){
         //   context.read<PyramidCubit>().playExtra(GuideTrack.one.path);
         // }
+
+        if( (Duration(milliseconds: breathingRoundTime).inSeconds - _startTime) == 1){
+          context.read<PyramidCubit>().playExtra(GuideTrack.getReadyTohold.path);
+        }
       });
     });
   }
@@ -160,13 +164,18 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
             stopTimer();
             storeScreenTime();
         
-            await context.read<PyramidCubit>().playExtra(GuideTrack.getReadyTohold.path);
-            setState(() {
-              showCountdown = true;
-            });
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              countdownController.start();
-            });
+            // await context.read<PyramidCubit>().playExtra(GuideTrack.getReadyTohold.path);
+            // setState(() {
+            //   showCountdown = true;
+            // });
+            // WidgetsBinding.instance.addPostFrameCallback((_) {
+            //   countdownController.start();
+            // });
+            _controller.reset();
+            context.read<PyramidCubit>().playChime();
+            Future.delayed(Duration(milliseconds: 700),() {
+              context.goNamed(RoutesName.pyramidBreathHoldScreen);
+            },);
           }
       } on Exception catch (e) {
         log(">>breath work ${e.toString()}");

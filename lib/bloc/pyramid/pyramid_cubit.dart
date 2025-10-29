@@ -205,8 +205,9 @@ class PyramidCubit extends Cubit<PyramidState> {
   Future<void> playMotivation() async {
     try {
       if(jerryVoice){
-        await audio.playFx(GuideTrack.motivation_2.path);
-        await audio.playFx(GuideTrack.motivation_1.path);
+        // await audio.playFx(GuideTrack.motivation_2.path);
+        // await audio.playFx(GuideTrack.motivation_1.path);
+        await audio.playFx(GuideTrack.motivation_2_1.path);
       }
     } catch (e) {
       log("playMotivation>> ${e.toString()}");

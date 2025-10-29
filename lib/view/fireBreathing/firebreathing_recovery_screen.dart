@@ -197,9 +197,11 @@ class _FirebreathingRecoveryScreenState
   void navigate(FirebreathingCubit cubit) async {
     if (cubit.currentSet == cubit.noOfSets) {
       await context.read<FirebreathingCubit>().audio.stopAll();
+      context.read<FirebreathingCubit>().playChime();
       context.goNamed(RoutesName.fireBreathingSuccessScreen);
     } else {
       cubit.updateRound();
+      context.read<FirebreathingCubit>().playChime();
       context.goNamed(RoutesName.fireBreathingScreen);
     }
   }
