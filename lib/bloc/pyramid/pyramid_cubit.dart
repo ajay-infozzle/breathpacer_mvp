@@ -284,7 +284,7 @@ class PyramidCubit extends Cubit<PyramidState> {
       if (breathCount != 0) {
         emit(PyramidBreathingPhase(phase: "in", remainingBreaths: breathCount));
         // currentBreathing = BreathHoldChoice.breatheIn.name ;
-        currentBreathing = 'Breath in' ;
+        currentBreathing = 'Breathe in' ;
       }
       else{
         currentBreathing = 'Ready to Hold' ;
@@ -308,7 +308,7 @@ class PyramidCubit extends Cubit<PyramidState> {
       // }
 
       emit(PyramidBreathingPhase(phase: "out", remainingBreaths: breathCount));
-      currentBreathing = 'Breath out' ;
+      currentBreathing = 'Breathe out' ;
 
       hasIncreased = true; 
     }

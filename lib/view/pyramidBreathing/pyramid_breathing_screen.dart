@@ -187,7 +187,7 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
               },);
             }
 
-            context.read<PyramidCubit>().currentBreathing = 'Breath in';
+            context.read<PyramidCubit>().currentBreathing = 'Breathe in';
           }
       } on Exception catch (e) {
         log(">>breath work ${e.toString()}");

@@ -110,7 +110,7 @@ class _WaitingScreenWidgetState extends State<WaitingScreenWidget> {
                       margin: EdgeInsets.symmetric(horizontal: size*0.05),
                       alignment: Alignment.center,
                       child: Text(
-                        "Get ready to breath...",
+                        "Get ready to breathe...",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: size*0.05,
