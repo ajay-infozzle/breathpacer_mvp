@@ -287,7 +287,7 @@ class PyramidCubit extends Cubit<PyramidState> {
         currentBreathing = 'Breath in' ;
       }
       else{
-        currentBreathing = 'Hold Time' ;
+        currentBreathing = 'Ready to Hold' ;
         emit(PyramidHold());
       }
 
@@ -355,7 +355,7 @@ class PyramidCubit extends Cubit<PyramidState> {
 
   void updateRound(){
     if(currentRound < int.parse(step??"0") ){
-      currentRound += currentRound ;
+      currentRound += 1 ;
     }
   }
   // ------------ Breathing Logic end ------------

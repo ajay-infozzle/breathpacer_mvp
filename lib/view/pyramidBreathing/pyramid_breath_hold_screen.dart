@@ -25,8 +25,8 @@ class PyramidBreathHoldScreen extends StatefulWidget {
 
 class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
   late CountdownController countdownController;
-  late Timer _timer;
-  int _startTime = 0;
+  // late Timer _timer;
+  // int _startTime = 0;
 
   @override
   void initState() {
@@ -39,45 +39,46 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
   void startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      setState(() {
-        _startTime++;
+    // _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+    //   setState(() {
+    //     _startTime++;
 
-        if (context.read<PyramidCubit>().holdDuration == -1) {
-          //~ ------- to start motivation when infinite hold -------
-          // if (_startTime % 10 == 0 && _startTime > 10) {
-          //   // context.read<PyramidCubit>().playHoldMotivation();
-          // }
-        }else{
+    //     if (context.read<PyramidCubit>().holdDuration == -1) {
+    //       //~ ------- to start motivation when infinite hold -------
+    //       // if (_startTime % 10 == 0 && _startTime > 10) {
+    //       //   // context.read<PyramidCubit>().playHoldMotivation();
+    //       // }
+    //     }else{
 
-          //~ ----------- play motivation -------------
-          // if(context.read<PyramidCubit>().holdDuration >= 20 && (context.read<PyramidCubit>().holdDuration - _startTime) > 9 ){
-          //   if(_startTime % 10 == 0){
-          //     // context.read<PyramidCubit>().playMotivation();
-          //     context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
-          //   }
-          if( context.read<PyramidCubit>().holdDuration > 10 && (context.read<PyramidCubit>().holdDuration / 2).ceil()  == (context.read<PyramidCubit>().holdDuration - _startTime) ){
-              context.read<PyramidCubit>().playMotivation();
-              // context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
-          }
-          //~ ----------- play motivation end ----------- 
+    //       //~ ----------- play motivation -------------
+    //       // if(context.read<PyramidCubit>().holdDuration >= 20 && (context.read<PyramidCubit>().holdDuration - _startTime) > 9 ){
+    //       //   if(_startTime % 10 == 0){
+    //       //     // context.read<PyramidCubit>().playMotivation();
+    //       //     context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
+    //       //   }
+
+    //       // if( context.read<PyramidCubit>().holdDuration > 10 && (context.read<PyramidCubit>().holdDuration / 2).ceil()  == (context.read<PyramidCubit>().holdDuration - _startTime) ){
+    //       //     context.read<PyramidCubit>().playMotivation();
+    //       //     // context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
+    //       // }
+    //       //~ ----------- play motivation end ----------- 
 
 
-          //~ to start last audios
-          playLastAudios();
-        }
-      });
-    });
+    //       //~ to start last audios
+    //       // playLastAudios();
+    //     }
+    //   });
+    // });
   }
 
   void stopTimer() {
     try {
-      _timer.cancel();
+      // _timer.cancel();
     } catch (e) {
       log(e.toString());
     }
@@ -87,9 +88,9 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     startTimer();
   }
 
-  void playLastAudios() {
+  void playLastAudios({required int min, required int sec, required bool doChange}) {
     final cubit = context.read<PyramidCubit>() ;
-    if(context.read<PyramidCubit>().holdDuration - _startTime == 4){
+    if( min == 0 && sec == (doChange?5:4) ){
       if(cubit.step == cubit.currentRound.toString() || (cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0)){
         //~ last round || (both hold choosen && breatHoldIndex = 0)
         if(cubit.breathHoldIndex == 0){
@@ -106,8 +107,8 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
         cubit.playExtra(GuideTrack.breathInNext.path);
       }
     }
-    else if(cubit.holdDuration - _startTime == 1){
-      if(cubit.breathHoldIndex == 0){
+    else if(min == 0 && sec == 1){
+      if(cubit.breathHoldIndex == 0 && doChange == false){
         cubit.playExtra(GuideTrack.singleBreathOut.path);
       }
       else if(cubit.breathHoldIndex == 1) {
@@ -120,13 +121,13 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     }
   }
 
-  String get getScreenTiming {
-    int minutes = _startTime ~/ 60;
-    int seconds = _startTime % 60;
-    String minutesStr = minutes.toString().padLeft(2, '0');
-    String secondsStr = seconds.toString().padLeft(2, '0');
-    return "$minutesStr:$secondsStr";
-  }
+  // String get getScreenTiming {
+  //   int minutes = _startTime ~/ 60;
+  //   int seconds = _startTime % 60;
+  //   String minutesStr = minutes.toString().padLeft(2, '0');
+  //   String secondsStr = seconds.toString().padLeft(2, '0');
+  //   return "$minutesStr:$secondsStr";
+  // }
 
   void storeScreenTime() {
     final cubit = context.read<PyramidCubit>();
@@ -147,7 +148,7 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     }
 
     if (kDebugMode) {
-      log(">> breath hold Time: $getScreenTiming");
+      log(">> breath hold Time: ${cubit.holdDuration}");
     }
   }
 
@@ -279,13 +280,16 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
                                   );
                                 },
                                 interval: const Duration(seconds: 1),
-                                onFinished: () {
+                                onFinished: () async{
                                   stopTimer();
                                   storeScreenTime();
                                   if(context.read<PyramidCubit>().choiceOfBreathHold == BreathHoldChoice.both.name && context.read<PyramidCubit>().breathHoldIndex == 0){
                                     context.read<PyramidCubit>().breathHoldIndex = 1;
-                                    context.pushReplacementNamed(RoutesName.pyramidBreathHoldScreen);
-                                    context.read<PyramidCubit>().playChime();
+
+                                    await Future.delayed(const Duration(milliseconds: 600), () {
+                                      context.pushReplacementNamed(RoutesName.pyramidBreathHoldScreen);
+                                      context.read<PyramidCubit>().playChime();
+                                    },);
                                   }else{
                                     // context.goNamed(RoutesName.waitingAfterHoldScreen);
                                     navigate(context.read<PyramidCubit>());
@@ -324,11 +328,36 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
   }
 
   String formatTimer(double time) {
+    final cubit =context.read<PyramidCubit>();
     int minutes = (time / 60).floor();
     int seconds = (time % 60).floor();
 
     String minutesStr = minutes.toString().padLeft(2, '0');
     String secondsStr = seconds.toString().padLeft(2, '0');
+
+    //~ ----------- play motivation start ---------
+    final midTime = (cubit.holdDuration / 2).ceil() ;
+    if( cubit.holdDuration > 10 && (cubit.holdDuration - time.toInt()) == midTime ){
+        cubit.playMotivation();
+    }
+    //~ ----------- play motivation end -----------
+
+    playLastAudios(min: minutes, sec: seconds, doChange: cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name);
+
+    if(cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name){
+      if(seconds == 3 && minutes == 0){
+        cubit.playExtra(GuideTrack.three.path);
+      }
+      else if(seconds == 2 && minutes == 0){
+        cubit.playExtra(GuideTrack.two.path);
+      }
+      else if(seconds == 1 && minutes == 0){
+        cubit.playExtra(GuideTrack.one.path);
+      }
+      else if(seconds == 0 && minutes == 0){
+        cubit.playExtra(GuideTrack.singleBreathOut.path);
+      }
+    }
 
     return "$minutesStr:$secondsStr";
   }

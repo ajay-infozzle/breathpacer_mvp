@@ -159,7 +159,7 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
             _controller.repeat(reverse: true);
             startTimer();
           } else if (state is PyramidHold) {
-            context.read<PyramidCubit>().playChime();
+            // context.read<PyramidCubit>().playChime();
             _controller.stop();
             stopTimer();
             storeScreenTime();
@@ -171,11 +171,23 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
             // WidgetsBinding.instance.addPostFrameCallback((_) {
             //   countdownController.start();
             // });
-            _controller.reset();
-            context.read<PyramidCubit>().playChime();
-            Future.delayed(Duration(milliseconds: 700),() {
+            if(context.read<PyramidCubit>().breathHoldIndex == 0){
+              print(">- 0");
+              await context.read<PyramidCubit>().playVoice( GuideTrack.singleBreathIn.path);
+
+              _controller.reset();
+              context.read<PyramidCubit>().playChime();
               context.goNamed(RoutesName.pyramidBreathHoldScreen);
-            },);
+            }else{
+              print(">- 1");
+              _controller.reset();
+              context.read<PyramidCubit>().playChime();
+              Future.delayed(Duration(milliseconds: 700),() {
+                context.goNamed(RoutesName.pyramidBreathHoldScreen);
+              },);
+            }
+
+            context.read<PyramidCubit>().currentBreathing = 'Breath in';
           }
       } on Exception catch (e) {
         log(">>breath work ${e.toString()}");
@@ -359,16 +371,19 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
                                   },
                                   interval: const Duration(seconds: 1),
                                   onFinished: () async{
-                                    // await context.read<PyramidCubit>().playExtra(
-                                    //   context.read<PyramidCubit>().breathHoldIndex == 0
-                                    //   ? GuideTrack.singleBreathIn.path
-                                    //   : GuideTrack.singleBreathOut.path
-                                    // );
-                                    _controller.reset();
-                                    context.read<PyramidCubit>().playChime();
-                                    Future.delayed(Duration(milliseconds: 700),() {
+                                    if(context.read<PyramidCubit>().breathHoldIndex == 0){
+                                      await context.read<PyramidCubit>().playVoice( GuideTrack.singleBreathIn.path);
+
+                                      _controller.reset();
+                                      context.read<PyramidCubit>().playChime();
                                       context.goNamed(RoutesName.pyramidBreathHoldScreen);
-                                    },);
+                                    }else{
+                                      _controller.reset();
+                                      context.read<PyramidCubit>().playChime();
+                                      Future.delayed(Duration(milliseconds: 700),() {
+                                        context.goNamed(RoutesName.pyramidBreathHoldScreen);
+                                      },);
+                                    }
                                   },
                                 ),
                               ),

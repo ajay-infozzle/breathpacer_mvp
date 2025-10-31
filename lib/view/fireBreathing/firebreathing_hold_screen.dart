@@ -244,7 +244,7 @@ class _FirebreathingHoldScreenState extends State<FirebreathingHoldScreen> {
     final cubit = context.read<FirebreathingCubit>();
 
     final midTime = (cubit.holdDuration / 2).ceil() ;
-    if((cubit.holdDuration - time.toInt()) == midTime ){
+    if(cubit.holdDuration > 10 && (cubit.holdDuration - time.toInt()) == midTime ){
       // cubit.playMotivation();
       cubit.playExtra(GuideTrack.noRegret.path);
     }
