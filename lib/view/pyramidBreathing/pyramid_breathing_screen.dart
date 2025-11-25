@@ -172,14 +172,12 @@ class _PyramidBreathingScreenState extends State<PyramidBreathingScreen> with Si
             //   countdownController.start();
             // });
             if(context.read<PyramidCubit>().breathHoldIndex == 0){
-              print(">- 0");
               await context.read<PyramidCubit>().playVoice( GuideTrack.singleBreathIn.path);
 
               _controller.reset();
               context.read<PyramidCubit>().playChime();
               context.goNamed(RoutesName.pyramidBreathHoldScreen);
             }else{
-              print(">- 1");
               _controller.reset();
               context.read<PyramidCubit>().playChime();
               Future.delayed(Duration(milliseconds: 700),() {

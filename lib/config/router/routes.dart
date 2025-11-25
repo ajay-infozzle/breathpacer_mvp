@@ -1,5 +1,11 @@
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/view/disclamer_widget.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/dna_breathing_screen.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/dna_hold_screen.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/dna_recovery_screen.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/dna_setting_screen.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/dna_success_screen.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/dna_waiting_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_hold_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_recovery_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_screen.dart';
@@ -7,6 +13,11 @@ import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_setting_screen.
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_success_screen.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/firebreathing_waiting_screen.dart';
 import 'package:breathpacer_mvp/view/interactive_breathing.dart';
+import 'package:breathpacer_mvp/view/pinealGlandActivation/pineal_recovery_screen.dart';
+import 'package:breathpacer_mvp/view/pinealGlandActivation/pineal_screen.dart';
+import 'package:breathpacer_mvp/view/pinealGlandActivation/pineal_setting_screen.dart';
+import 'package:breathpacer_mvp/view/pinealGlandActivation/pineal_success_screen.dart';
+import 'package:breathpacer_mvp/view/pinealGlandActivation/pineal_waiting_screen.dart';
 import 'package:breathpacer_mvp/view/pyramidBreathing/breathing_step_guide_screen.dart';
 import 'package:breathpacer_mvp/view/pyramidBreathing/pyramid_breath_hold_screen.dart';
 import 'package:breathpacer_mvp/view/pyramidBreathing/pyramid_breathing_screen.dart';
@@ -259,6 +270,167 @@ class AppRoutes {
             },
           ),
           // ----- firebreathing routes end -----
+
+          // ----- dnabreathing routes -----
+          GoRoute(
+            path: RoutesName.dnaSettingScreen,
+            name: RoutesName.dnaSettingScreen,
+            pageBuilder: (context, state) {
+              dynamic parameters = state.extra ;
+              return customPageRouteBuilder(
+                DnaSettingScreen(
+                  subTitle: parameters["subTitle"]!,
+                ), 
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+
+          GoRoute(
+            path: RoutesName.dnaWaitingScreen,
+            name: RoutesName.dnaWaitingScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const DnaWaitingScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.dnaBreathingScreen,
+            name: RoutesName.dnaBreathingScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const DnaBreathingScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.dnaHoldScreen,
+            name: RoutesName.dnaHoldScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const DnaHoldScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.dnaRecoveryScreen,
+            name: RoutesName.dnaRecoveryScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const DnaRecoveryScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.dnaSuccessScreen,
+            name: RoutesName.dnaSuccessScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const DnaSuccessScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          // GoRoute(
+          //   path: RoutesName.dnaBreathingCountdownScreen,
+          //   name: RoutesName.dnaBreathingCountdownScreen,
+          //   pageBuilder: (context, state) {
+          //     dynamic params = state.extra ;
+          //     return customPageRouteBuilder(
+          //       DnaCountdownScreen(
+          //         gotoHold: params['hold'] ?? false,
+          //         gotoRecover: params['recover'] ?? false,
+          //         gotoSuccess: params['success'] ?? false,
+          //       ),
+          //       state.pageKey, 
+          //       transitionDuration: const Duration(milliseconds: 500)
+          //     );
+          //   },
+          // ),
+          // ----- dnabreathing routes end -----
+
+          // ----- pinealbreathing routes -----
+          GoRoute(
+            path: RoutesName.pinealSettingScreen,
+            name: RoutesName.pinealSettingScreen,
+            pageBuilder: (context, state) {
+              dynamic parameters = state.extra ;
+              return customPageRouteBuilder(
+                PinealSettingScreen(
+                  subTitle: parameters["subTitle"]!,
+                ), 
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+
+          GoRoute(
+            path: RoutesName.pinealWaitingScreen,
+            name: RoutesName.pinealWaitingScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const PinealWaitingScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.pinealScreen,
+            name: RoutesName.pinealScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const PinealScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.pinealRecoveryScreen,
+            name: RoutesName.pinealRecoveryScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const PinealRecoveryScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+
+          GoRoute(
+            path: RoutesName.pinealSuccessScreen,
+            name: RoutesName.pinealSuccessScreen,
+            pageBuilder: (context, state) {
+              return customPageRouteBuilder(
+                const PinealSuccessScreen(),
+                state.pageKey, 
+                transitionDuration: const Duration(milliseconds: 500)
+              );
+            },
+          ),
+          // ----- pinealbreathing routes end -----
 
         ] 
       ),

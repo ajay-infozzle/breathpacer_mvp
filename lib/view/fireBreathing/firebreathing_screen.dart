@@ -319,7 +319,7 @@ class _FirebreathingScreenState extends State<FirebreathingScreen> {
       }
 
       else if(cubit.holdingPeriod == false && cubit.recoveryBreath == false && cubit.currentSet != cubit.noOfSets){
-        cubit.playExtra(GuideTrack.timeToNextSet.path);
+        // cubit.playExtra(GuideTrack.timeToNextSet.path);
       }
     }
 

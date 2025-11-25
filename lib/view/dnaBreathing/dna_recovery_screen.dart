@@ -1,7 +1,7 @@
 
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
+import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
@@ -12,16 +12,14 @@ import 'package:go_router/go_router.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-class FirebreathingRecoveryScreen extends StatefulWidget {
-  const FirebreathingRecoveryScreen({super.key});
+class DnaRecoveryScreen extends StatefulWidget {
+  const DnaRecoveryScreen({super.key});
 
   @override
-  State<FirebreathingRecoveryScreen> createState() =>
-      _FirebreathingRecoveryScreenState();
+  State<DnaRecoveryScreen> createState() => _DnaRecoveryScreenState();
 }
 
-class _FirebreathingRecoveryScreenState
-    extends State<FirebreathingRecoveryScreen> {
+class _DnaRecoveryScreenState extends State<DnaRecoveryScreen> {
   late CountdownController countdownController;
 
   @override
@@ -29,17 +27,17 @@ class _FirebreathingRecoveryScreenState
     super.initState();
 
     countdownController = CountdownController(autoStart: true);
-    // context.read<FirebreathingCubit>().playVoice(GuideTrack.nowRecover.path);
+    // context.read<DnaCubit>().playVoice(GuideTrack.nowRecover.path);
   }
 
   void storeScreenTime() {
-    context.read<FirebreathingCubit>().recoveryTimeList.add(
-      context.read<FirebreathingCubit>().recoveryBreathDuration,
+    context.read<DnaCubit>().recoveryTimeList.add(
+      context.read<DnaCubit>().recoveryBreathDuration,
     );
 
     if (kDebugMode) {
       print(
-        "breath recovery Time: ${context.read<FirebreathingCubit>().recoveryBreathDuration}",
+        "breath recovery Time: ${context.read<DnaCubit>().recoveryBreathDuration}",
       );
     }
   }
@@ -54,11 +52,11 @@ class _FirebreathingRecoveryScreenState
     double size = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return BlocConsumer<FirebreathingCubit, FirebreathingState>(
+    return BlocConsumer<DnaCubit, DnaState>(
       listener: (context, state) {
-       if (state is FirebreathingPaused) {
+       if (state is DnaPaused) {
           countdownController.pause();
-        } else if (state is FirebreathingResumed) {
+        } else if (state is DnaResumed) {
           countdownController.resume();
         } 
       },
@@ -82,14 +80,14 @@ class _FirebreathingRecoveryScreenState
                     leading: GestureDetector(
                       onTap: () {
                         countdownController.pause();
-                        context.read<FirebreathingCubit>().resetSettings();
+                        context.read<DnaCubit>().resetSettings(BreathSpeed.standard.name);
 
                         context.goNamed(RoutesName.homeScreen);
                       },
                       child: const Icon(Icons.close, color: Colors.white),
                     ),
                     title: Text(
-                      "Set ${context.read<FirebreathingCubit>().currentSet}",
+                      "Set ${context.read<DnaCubit>().currentSet}",
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -99,9 +97,9 @@ class _FirebreathingRecoveryScreenState
                       // if (countdownController.isCompleted == false)
                         IconButton(
                           onPressed:
-                              context.read<FirebreathingCubit>().togglePause,
+                              context.read<DnaCubit>().togglePause,
                           icon: Icon(
-                            context.read<FirebreathingCubit>().paused
+                            context.read<DnaCubit>().paused
                                 ? Icons.play_arrow
                                 : Icons.pause,
                             color: Colors.white,
@@ -158,7 +156,7 @@ class _FirebreathingRecoveryScreenState
                               controller: countdownController,
                               seconds:
                                   context
-                                      .read<FirebreathingCubit>()
+                                      .read<DnaCubit>()
                                       .recoveryBreathDuration,
                               build:
                                   (BuildContext context, double time) => Text(
@@ -171,7 +169,7 @@ class _FirebreathingRecoveryScreenState
                               interval: const Duration(seconds: 1),
                               onFinished: () {
                                 storeScreenTime();
-                                navigate(context.read<FirebreathingCubit>());
+                                navigate(context.read<DnaCubit>());
                               },
                             ),
                           ),
@@ -194,15 +192,15 @@ class _FirebreathingRecoveryScreenState
   }
 
 
-  void navigate(FirebreathingCubit cubit) async {
+  void navigate(DnaCubit cubit) async {
     if (cubit.currentSet == cubit.noOfSets) {
-      await context.read<FirebreathingCubit>().audio.stopAll();
-      context.read<FirebreathingCubit>().playChime();
-      context.goNamed(RoutesName.fireBreathingSuccessScreen);
+      await context.read<DnaCubit>().audio.stopAll();
+      context.read<DnaCubit>().playChime();
+      context.goNamed(RoutesName.dnaSuccessScreen);
     } else {
       cubit.updateRound();
-      context.read<FirebreathingCubit>().playChime();
-      context.goNamed(RoutesName.fireBreathingScreen);
+      context.read<DnaCubit>().playChime();
+      context.goNamed(RoutesName.dnaBreathingScreen);
     }
   }
 
@@ -213,7 +211,7 @@ class _FirebreathingRecoveryScreenState
     String minutesStr = minutes.toString().padLeft(2, '0');
     String secondsStr = seconds.toString().padLeft(2, '0');
 
-    final cubit = context.read<FirebreathingCubit>();
+    final cubit = context.read<DnaCubit>();
 
     if(seconds == 5 && minutes == 0){
 

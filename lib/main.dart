@@ -1,4 +1,6 @@
+import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
+import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes.dart';
 import 'package:breathpacer_mvp/config/services/audio_services.dart';
@@ -34,8 +36,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => PyramidCubit(audioOrchestrator)),
         BlocProvider(create: (context) => FirebreathingCubit(audioOrchestrator)),
-        // BlocProvider(create: (context) => DnaCubit()),
-        // BlocProvider(create: (context) => PinealCubit()),
+        BlocProvider(create: (context) => DnaCubit(audioOrchestrator)),
+        BlocProvider(create: (context) => PinealCubit(audioOrchestrator)),
       ],
       child: Builder(
         builder: (context){

@@ -9,11 +9,11 @@ const interactionOptions = [
     "image": "assets/images/fire_icon.png",
     "description": "Release toxins and chemicals from the cells in your body. Enhance mental clarity. Start your day with this powerful activator.  Do it anytime you need a boost of energy. Fire Breathing is an intense rapid breathing exercises done through the nose.  Inhale deeply through your nose and exhale forcefully through your nose in a continuous steady pace.  At the end of the set hold your breath and recover.",
   },
-  // {
-  //   "title": "DNA Breathing",
-  //   "image": "assets/images/dna_icon.png",
-  //   "description": "Powerful breathing technique that will energize and renew you at a cellular level, releasing stuck emotions and past trauma.  Breathe deeply and continuously through your mouth and hold your breath at the end of each set. ",
-  // },
+  {
+    "title": "DNA Breathing",
+    "image": "assets/images/dna_icon.png",
+    "description": "Powerful breathing technique that will energize and renew you at a cellular level, releasing stuck emotions and past trauma.  Breathe deeply and continuously through your mouth and hold your breath at the end of each set. ",
+  },
   // {
   //   "title": "Pineal Gland Activation",
   //   "image": "assets/images/pineal_icon.png",
@@ -120,12 +120,16 @@ enum GuideTrack{
   getReadyToBreathOut("${audioAssetFile}ready_to_breath_out.mp3"), 
   nowHold("${audioAssetFile}now_hold.mp3"),
   relax("${audioAssetFile}relax.mp3"),
+
   firebreathingPinealStart("${audioAssetFile}firebreathing_pineal_start.mp3"),
   firebreathingStart("${audioAssetFile}firebreathing_start.mp3"),
   firebreathing("${audioAssetFile}firebreathing.mp3"),
   firebreathingPineal("${audioAssetFile}firebreathing_pineal.mp3"),
   getReadyToRecover("${audioAssetFile}ready_to_recover.mp3"),
   getReadyForNextSet("${audioAssetFile}ready_for_next_set.mp3"),
+
+  dnaStart("${audioAssetFile}dna_start.mp3"),
+  
   nowRecover("${audioAssetFile}now_recover.mp3"),
   timeToNextSet("${audioAssetFile}time_to_next_set.mp3"), //Todo: change
   minToGo6("${audioAssetFile}6_min_to_go.mp3"),
@@ -151,6 +155,8 @@ const String imageAssetFile = "assets/images/" ;
 enum ImagePath{
   jerryImage("${imageAssetFile}healing_jerry.png"),
   pyramidIcon("${imageAssetFile}pyramid_icon.png"),
+  dnaIcon("${imageAssetFile}dna_icon.png"),
+  pinealIcon("${imageAssetFile}pineal_icon.png"),
   holdImage("${imageAssetFile}hold.png"),
   timeImage("${imageAssetFile}time.png"),
   voiceImage("${imageAssetFile}voice.png"),
