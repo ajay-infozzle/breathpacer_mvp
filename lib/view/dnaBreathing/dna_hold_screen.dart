@@ -179,7 +179,7 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
                                   storeScreenTime();
 
                                   Future.delayed(
-                                    const Duration(seconds: 1),
+                                    Duration(seconds: cubit.choiceOfBreathHold == BreathHoldChoice.both.name ? 1 : 0),
                                     () async{
                                       if(cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0){
                                         //null
@@ -299,12 +299,12 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
     else if(seconds == 5 && minutes == 0){
       //~ if hold is in-breath 
       if(cubit.choiceOfBreathHold == BreathHoldChoice.breatheIn.name){
-        cubit.playVoice(GuideTrack.getReadyToBreathOut.path);
+        // cubit.playVoice(GuideTrack.getReadyToBreathOut.path);
       }
 
       //~ if hold is out-breath 
       else if(cubit.choiceOfBreathHold == BreathHoldChoice.breatheOut.name){
-        cubit.playVoice(GuideTrack.getReadyToBreathIn.path);
+        // cubit.playVoice(GuideTrack.getReadyToBreathIn.path);
       }
     }
     else if(seconds == 3 && minutes == 0){
@@ -318,13 +318,14 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
     }
     else if(seconds == 0 && minutes == 0){
       //~ if hold is in-breath 
-      if(cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2 ){
+      // if(cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2 ){
+      if( (cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2) && cubit.choiceOfBreathHold == BreathHoldChoice.both.name ){
         cubit.playExtra(GuideTrack.singleBreathOut.path);
       }
 
       //~ if hold is out-breath 
       else if(cubit.breathHoldIndex == 1){
-        cubit.playExtra(GuideTrack.singleBreathIn.path);
+        // cubit.playExtra(GuideTrack.singleBreathIn.path);
       }
     }
 

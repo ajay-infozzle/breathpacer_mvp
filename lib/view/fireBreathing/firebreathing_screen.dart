@@ -230,7 +230,8 @@ class _FirebreathingScreenState extends State<FirebreathingScreen> {
     final midTime = (cubit.durationOfSets / 2).ceil() ;
     // if((cubit.durationOfSets - seconds) % 25 == 0 && seconds > 30 && cubit.durationOfSets > 30){
     if((cubit.durationOfSets - time.toInt()) == midTime ){
-      cubit.playMotivation();
+      // cubit.playMotivation();
+      cubit.playExtra(GuideTrack.noRegret.path);
     }
     else if(minutes == 1 && seconds == 0 && cubit.durationOfSets > 60){
       cubit.playExtra(GuideTrack.minToGo1.path);

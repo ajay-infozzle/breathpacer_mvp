@@ -90,17 +90,37 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
 
   void playLastAudios({required int min, required int sec, required bool doChange}) {
     final cubit = context.read<PyramidCubit>() ;
-    if( min == 0 && sec == (doChange?5:4) ){
-      if(cubit.step == cubit.currentRound.toString() || (cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0)){
-        //~ last round || (both hold choosen && breatHoldIndex = 0)
-        if(cubit.breathHoldIndex == 0){
-          cubit.playExtra(GuideTrack.getReadyToBreathOut.path);
-        }
-        else if(cubit.breathHoldIndex == 1) {
-          cubit.playExtra(GuideTrack.getReadyToBreathIn.path);
-        }
+    // // if( min == 0 && sec > 1 && sec <= 6 ){
+    // if( min == 0 && sec == (doChange?5:4) ){
+    //   if(cubit.step == cubit.currentRound.toString() || (cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0 )){
+    //   // if( (cubit.step == cubit.currentRound.toString() || (cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0)) && sec == 5 ){
+    //     //~ last round || (both hold choosen && breatHoldIndex = 0)
+    //     if(cubit.breathHoldIndex == 0){
+    //       cubit.playExtra(GuideTrack.getReadyToBreathOut.path);
+    //     }
+    //     else if(cubit.breathHoldIndex == 1) {
+    //       cubit.playExtra(GuideTrack.getReadyToBreathIn.path);
+    //     }
+    //   }
+    //   else if(cubit.breathHoldIndex == 0){
+    //   // else if(cubit.breathHoldIndex == 0 && sec == 4){
+    //     cubit.playExtra(GuideTrack.breathOutNext.path);
+    //   }
+    //   else if(cubit.breathHoldIndex == 1) {
+    //   // else if(cubit.breathHoldIndex == 1 && sec == 6) {
+    //     cubit.playExtra(GuideTrack.breathInNext.path);
+    //   }
+    // }
+    if((cubit.step == cubit.currentRound.toString() || (cubit.choiceOfBreathHold == BreathHoldChoice.both.name && cubit.breathHoldIndex == 0 ) ) && min == 0 && sec == (doChange?5:5)){
+      if(cubit.breathHoldIndex == 0){
+        cubit.playExtra(GuideTrack.getReadyToBreathOut.path);
       }
-      else if(cubit.breathHoldIndex == 0){
+      else if(cubit.breathHoldIndex == 1) {
+        cubit.playExtra(GuideTrack.getReadyToBreathIn.path);
+      }
+    }
+    else if( min == 0 && sec == (doChange?5:6) && cubit.step != cubit.currentRound.toString() ){
+      if(cubit.breathHoldIndex == 0){
         cubit.playExtra(GuideTrack.breathOutNext.path);
       }
       else if(cubit.breathHoldIndex == 1) {
@@ -121,27 +141,13 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     }
   }
 
-  // String get getScreenTiming {
-  //   int minutes = _startTime ~/ 60;
-  //   int seconds = _startTime % 60;
-  //   String minutesStr = minutes.toString().padLeft(2, '0');
-  //   String secondsStr = seconds.toString().padLeft(2, '0');
-  //   return "$minutesStr:$secondsStr";
-  // }
-
   void storeScreenTime() {
     final cubit = context.read<PyramidCubit>();
     if (cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2) {
-      // context.read<PyramidCubit>().holdInbreathTimeList.add(
-      //   _startTime - 1 < 0 ? 0 : _startTime - 1,
-      // ); //~ -1 is added due to starttime auto increased 1 sec more
       cubit.holdInbreathTimeList.add(
         cubit.holdDuration
       ); 
     } else {
-      // context.read<PyramidCubit>().holdBreathoutTimeList.add(
-      //   _startTime - 1 < 0 ? 0 : _startTime - 1,
-      // ); //~ -1 is added due to starttime auto increased 1 sec more
       cubit.holdBreathoutTimeList.add(
         cubit.holdDuration
       ); 
@@ -344,7 +350,8 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
 
     playLastAudios(min: minutes, sec: seconds, doChange: cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name);
 
-    if(cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name){
+    // if(cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name){
+    if( (cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name) || cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 1 ){
       if(seconds == 3 && minutes == 0){
         cubit.playExtra(GuideTrack.three.path);
       }
