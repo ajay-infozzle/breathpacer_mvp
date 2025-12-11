@@ -1,4 +1,5 @@
 import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
+import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/view/widget/result_container_section_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +12,19 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ResultContainerSectionWidget(
+        ResultContainerSectionWidget(
           title: "Breathwork Preference",
           showIcon: false,
           showContent: false,
-          containerColor: Color(0xffFE60D4),
+          containerColor: AppTheme.colors.newPrimaryColor,
           textColor: Colors.white,
         ),
 
         ResultContainerSectionWidget(
-          title: 'Breathing period selected:',
-          content: getFormattedTime(context.read<PinealCubit>().breathingPeriod),
-          iconPath: "assets/images/time.png",
+          title: 'Total duration:',
+          content: getFormattedTime(context.read<PinealCubit>().noOfSets * 
+            (context.read<PinealCubit>().holdDuration + context.read<PinealCubit>().recoveryBreathDuration)),
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -36,7 +38,7 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'No. of sets:',
           content: context.read<PinealCubit>().currentSet.toString(),
-          iconPath: "assets/images/time.png",
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -49,8 +51,8 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
 
         ResultContainerSectionWidget(
           title: 'Hold time per set:',
-          content: context.read<PinealCubit>().holdDuration == -1 ? "Infinite" :getFormattedTime(context.read<PinealCubit>().holdDuration),
-          iconPath: "assets/images/time.png",
+          content: getFormattedTime(context.read<PinealCubit>().holdDuration),
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -64,7 +66,7 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Recovery breath per set:',
           content: getFormattedTime(context.read<PinealCubit>().recoveryBreathDuration),
-          iconPath: "assets/images/recovery.png",
+          iconPath: ImagePath.recoveryIcon.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -78,7 +80,7 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Jerry's voice:",
           content: context.read<PinealCubit>().jerryVoice ?"Yes" : "No",
-          iconPath: "assets/images/voice.png",
+          iconPath: ImagePath.voiceImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -92,7 +94,7 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Music:",
           content: context.read<PinealCubit>().music ?"Yes" : "No",
-          iconPath: "assets/images/music.png",
+          iconPath: ImagePath.musicImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -106,7 +108,7 @@ class PinealWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Chimes at start/stop points:",
           content: context.read<PinealCubit>().chimes ?"Yes" : "No",
-          iconPath: "assets/images/chime.png",
+          iconPath: ImagePath.chimeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,

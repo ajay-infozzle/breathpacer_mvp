@@ -21,7 +21,7 @@ class PinealWaitingScreen extends StatelessWidget {
         context.read<PinealCubit>().audio.stop(AudioChannel.voice);
 
         Future.delayed(
-          Duration(seconds: 1), 
+          Duration(milliseconds: 700), 
           (){
             context.read<PinealCubit>().playChime();
             context.pushReplacementNamed(RoutesName.pinealScreen);

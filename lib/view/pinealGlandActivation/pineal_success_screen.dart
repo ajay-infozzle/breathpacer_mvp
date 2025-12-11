@@ -19,6 +19,8 @@ class PinealSuccessScreen extends StatefulWidget {
 
 class _PinealSuccessScreenState extends State<PinealSuccessScreen> {
 
+  TextEditingController saveInputCont = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -80,31 +82,12 @@ class _PinealSuccessScreenState extends State<PinealSuccessScreen> {
                   Expanded(
                     child: ListView(
                       children: [
-                        // SizedBox(height: height*0.07,),
-                        // Container(
-                        //   margin: EdgeInsets.symmetric(horizontal: size*0.06),
-                        //   alignment: Alignment.center,
-                        //   child: Column(
-                        //     children: [
-                        //       Text(
-                        //         "Pyramid Breathing",
-                        //         style: TextStyle(color: Colors.white, fontSize: size*0.05,fontWeight: FontWeight.bold),
-                        //       ),
-                        //       Text(
-                        //         context.read<PyramidCubit>().step == "2" ? "2 step (12-6 breathing)" : "4 step (12-9-6-3 breathing)",
-                        //         style: TextStyle(color: Colors.white, fontSize: size*0.04),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                    
-                        // SizedBox(height: height*0.04,),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: size*0.06),
                           alignment: Alignment.center,
                           child: CircleAvatar(
                             radius: size*0.12,
-                            child: Image.asset("assets/images/completion_icon.png"),
+                            child: Image.asset(ImagePath.completionIcon.path),
                           ),
                         ),
                     
@@ -207,12 +190,12 @@ class _PinealSuccessScreenState extends State<PinealSuccessScreen> {
                         alignment: Alignment.center,
                         color: Colors.black.withOpacity(.3),
                         child: SaveCustomDialogBoxWidget(
-                          controller: context.read<PinealCubit>().saveInputCont,
+                          controller: saveInputCont,
                           onClose: (){
                             context.read<PinealCubit>().onCloseDialogClick();
                           },
                           onSave: () {
-                            context.read<PinealCubit>().onSaveClick();
+                            context.read<PinealCubit>().onSaveClick(saveInputCont.text);
                           },
                         ),
                       ) 

@@ -6,10 +6,8 @@ import 'package:breathpacer_mvp/config/services/audio_services.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/utils/constant/toast.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:meta/meta.dart';
 
 part 'pineal_state.dart';
 
@@ -20,8 +18,8 @@ class PinealCubit extends Cubit<PinealState> {
 
   int noOfSets = 1;
   int currentSet = 0;
-  int durationOfSet = 120;
-  bool recoveryBreath = false;
+  // int durationOfSet = 120;
+  // bool recoveryBreath = false;
   bool jerryVoice = true;
   bool music = true;
   bool chimes = true;
@@ -29,39 +27,68 @@ class PinealCubit extends Cubit<PinealState> {
   int recoveryBreathDuration = 20;
   // String jerryVoiceAssetFile = jerryVoiceOver(JerryVoiceEnum.pinealSqeez);
   int holdDuration = 20;
-  int breathingPeriod = 300;
+  // int breathingPeriod = 300;
+  List<int> setsList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] ; 
   List<int> breathingDurationList = [30, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600] ;
-  List<int> holdDurationList = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 120, -1] ;
+  List<int> holdDurationList = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 120] ;
   List<int> recoveryDurationList = [10, 20, 30, 60, 120] ;
 
+  // List<int> breathingTimeList = []; //sec
+  List<int> holdTimeList = []; //sec
+  List<int> recoveryTimeList = []; //sec
+
   int selectedMusic = 1; 
-  String musicPath = "audio/music_1.mp3";
+  String musicPath = MusicTrack.track1.path;
   
-  int remainingBreathTime = 0;
+  // int remainingBreathTime = 0;
+  bool paused = false;
   bool isReatartEnable = false;
   bool isSaveDialogOn = false;
-  bool isFirstSet = true;
-  TextEditingController saveInputCont = TextEditingController();
+  // bool isFirstSet = true;
 
+  void resetSettings(){
+    jerryVoice = true;
+    music = true;
+    chimes = true;
+    // isFirstSet = true;
+    // durationOfSet = 120;
+    isReatartEnable = false;
+    holdDuration = 20;
+    // breathingPeriod = 300;
+    noOfSets = 1;
+    skipIntro = false;
+    recoveryBreathDuration = 20;
 
-  void calculateRemainingBreathTime(int time){
-    if((remainingBreathTime - time) < 0){
-      remainingBreathTime = 0;
-    }
-    else{
-      remainingBreathTime = remainingBreathTime - time ;
-    }
+    currentSet = 0;
+    // remainingBreathTime = 0;
+    // breathingTimeList.clear();
+    holdTimeList.clear();
+    recoveryTimeList.clear();
+    isSaveDialogOn = false;
+    paused = false;
+    
     emit(PinealInitial());
   }
 
-  void updateRemainingBreathTime(int time){
-    remainingBreathTime = time ;
-    emit(PinealInitial());
-  }
+  // void calculateRemainingBreathTime(int time){
+  //   if((remainingBreathTime - time) < 0){
+  //     remainingBreathTime = 0;
+  //   }
+  //   else{
+  //     remainingBreathTime = remainingBreathTime - time ;
+  //   }
+  //   emit(PinealInitial());
+  // }
+
+  // void updateRemainingBreathTime(int time){
+  //   remainingBreathTime = time ;
+  //   emit(PinealInitial());
+  // }
 
   void updateBreathing(int number){
-    breathingPeriod = number ;
-    emit(PinealBreathingUpdate(breathingPeriod));
+    // breathingPeriod = number ;
+    noOfSets = number ;
+    emit(PinealBreathingUpdate(noOfSets));
   }
 
   void updateHold(int number){
@@ -116,40 +143,14 @@ class PinealCubit extends Cubit<PinealState> {
     emit(PinealToggleChimes(chimes));
   }
 
-  bool checkBreathingPeriod(){
-    if(breathingPeriod % holdDuration == 0){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
-
-  // ..
-  List<int> breathingTimeList = []; //sec
-  List<int> recoveryTimeList = []; //sec
-
-
-  void resetSettings(){
-    jerryVoice = true;
-    music = true;
-    chimes = true;
-    isFirstSet = true;
-    durationOfSet = 120;
-    isReatartEnable = false;
-    holdDuration = 20;
-    breathingPeriod = 300;
-    noOfSets = 1;
-    skipIntro = false;
-    recoveryBreathDuration = 20;
-
-    currentSet = 0;
-    remainingBreathTime = 0;
-    breathingTimeList.clear();
-    recoveryTimeList.clear();
-    
-    emit(PinealInitial());
-  }
+  // bool checkBreathingPeriod(){
+  //   if(breathingPeriod % holdDuration == 0){
+  //     return true;
+  //   }
+  //   else{
+  //     return false;
+  //   }
+  // }
 
 
   late int waitingTime ;
@@ -161,10 +162,11 @@ class PinealCubit extends Cubit<PinealState> {
           path = GuideTrack.skipIntro.path ;
         }
         else{
-          path = GuideTrack.dnaStart.path ;
+          path = GuideTrack.pinealStart.path ;
         }
 
         waitingTime = await audio.playVoiceAndGetDuration(path);
+        waitingTime += 1; // to increase wait time by 1 sec after voice over
         emit(NavigateToWaitingScreen());
       }else{
         waitingTime = 5;
@@ -172,6 +174,18 @@ class PinealCubit extends Cubit<PinealState> {
       }
     } on Exception catch (e) {
       log("playCloseEyes>> ${e.toString()}");
+    }
+  }
+
+  Future<void> playBeforeHold() async {
+    try {
+      if(jerryVoice){
+        return await audio.playVoice(GuideTrack.pinealStartNext.path);
+      }else{
+        return ;
+      }
+    } on Exception catch (e) {
+      log("playBeforeHold>> ${e.toString()}");
     }
   }
 
@@ -229,6 +243,44 @@ class PinealCubit extends Cubit<PinealState> {
     }
   }
 
+
+  void togglePause() {
+    paused = !paused;
+    try {
+      if (paused) {
+        audio.pauseAll();
+        emit(PinealPaused());
+      } else {
+        audio.resumeAll();
+        emit(PinealResumed());
+      }
+    } catch (e) {
+      log("togglePause>> ${e.toString()}");
+    }
+  }
+
+  void playCount(String time) async {
+    try{
+      if (jerryVoice) {
+        if(time == "3"){
+          await audio.playFx(GuideTrack.three.path);
+        }else if(time == "2"){
+          await audio.playFx(GuideTrack.two.path);
+        }else if(time == "1"){
+          await audio.playFx(GuideTrack.one.path);
+        }
+      }
+    }catch(e){
+      log("playCount>> ${e.toString()}");
+    }
+  }
+
+  void updateRound(){
+    if(currentSet < noOfSets ){
+      currentSet = currentSet + 1;
+    }
+  }
+
   
   void setToogleSaveDialog(){
     isSaveDialogOn = !isSaveDialogOn;
@@ -241,8 +293,8 @@ class PinealCubit extends Cubit<PinealState> {
   }
 
   List<PinealBreathworkModel> savedBreathwork = [];
-  void onSaveClick() async{
-    if(saveInputCont.text.isEmpty){
+  void onSaveClick(String text) async{
+    if(text.isEmpty){
       emit(PinealToggleSave(isSaveDialogOn));
       return ;
     }
@@ -250,15 +302,16 @@ class PinealCubit extends Cubit<PinealState> {
     var box = await Hive.openBox('pinealBreathworkBox');
 
     PinealBreathworkModel breathwork = PinealBreathworkModel(
-      title: saveInputCont.text,
+      title: text,
       numberOfSets: noOfSets.toString(),
       jerryVoice: jerryVoice,
       music: music,
       chimes: chimes,
-      breathingPeriod: breathingPeriod,
+      breathingPeriod: noOfSets,
+      // breathingPeriod: breathingPeriod,
       holdTimePerSet: holdDuration,
       recoveryTimePerSet: recoveryBreathDuration,
-      breathingTimeList: breathingTimeList,
+      breathingTimeList: holdTimeList,
       recoveryTimeList: recoveryTimeList
     );
 
@@ -266,7 +319,6 @@ class PinealCubit extends Cubit<PinealState> {
    
     savedBreathwork.add(breathwork);
     isSaveDialogOn = false;
-    saveInputCont.clear();
 
     updateSavedPinealBreathwork();
     

@@ -193,6 +193,7 @@ class FirebreathingCubit extends Cubit<FirebreathingState> {
         }
 
         waitingTime = await audio.playVoiceAndGetDuration(path);
+        waitingTime += 1; // to increase wait time by 1 sec after voice over
         emit(NavigateToWaitingScreen());
       }
       else{

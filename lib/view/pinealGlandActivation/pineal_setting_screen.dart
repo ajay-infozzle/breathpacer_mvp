@@ -2,7 +2,6 @@ import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
-import 'package:breathpacer_mvp/utils/constant/toast.dart';
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:breathpacer_mvp/view/widget/custom_modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/modal_dropdown.dart';
@@ -116,13 +115,10 @@ class PinealSettingScreen extends StatelessWidget {
                                         .read<PinealCubit>()
                                         .updateBreathing(selected);
                                   },
-                                  title: "Breathing Period:",
-                                  selected:
-                                      context.read<PinealCubit>().breathingPeriod,
-                                  options: context
-                                      .read<PinealCubit>()
-                                      .breathingDurationList,
-                                  isTime: true,
+                                  title: "Number of sets:",
+                                  selected: context.read<PinealCubit>().noOfSets,
+                                  options: context.read<PinealCubit>().setsList,
+                                  isTime: false,
                                 );
                               },
                             ),
@@ -284,12 +280,8 @@ class PinealSettingScreen extends StatelessWidget {
                                   spacing: .7,
                                   radius: 0,
                                   onPress: () {
-                                    // if(!context.read<PinealCubit>().checkBreathingPeriod()){
-                                    //   showToast("Breathing period should be multiple of hold time!");
-                                    // }else{
-                                    //   context.read<PinealCubit>().playBackgroundMusic();
-                                    //   context.read<PinealCubit>().playCloseEyes();
-                                    // }
+                                    context.read<PinealCubit>().playBackgroundMusic();
+                                    context.read<PinealCubit>().playCloseEyes();
                                   }
                               );
                             },

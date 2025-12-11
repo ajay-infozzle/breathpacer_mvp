@@ -254,13 +254,14 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                                 spacing: .7,
                                 radius: 8,
                                 onPress: (){
-                                  context.read<PinealCubit>().breathingTimeList.clear();
+                                  context.read<PinealCubit>().holdTimeList.clear();
                                   context.read<PinealCubit>().recoveryTimeList.clear();
 
                                   final savedWork = context.read<PinealCubit>().savedBreathwork[i] ;
                                   context.read<PinealCubit>().noOfSets = int.parse(savedWork.numberOfSets!) ;
                                   context.read<PinealCubit>().currentSet = 0 ;
-                                  context.read<PinealCubit>().breathingPeriod = savedWork.breathingPeriod! ;
+                                  context.read<PinealCubit>().noOfSets = savedWork.breathingPeriod! ;
+                                  // context.read<PinealCubit>().breathingPeriod = savedWork.breathingPeriod! ;
                                   context.read<PinealCubit>().holdDuration = savedWork.holdTimePerSet! ; 
                                   context.read<PinealCubit>().recoveryBreathDuration = savedWork.recoveryTimePerSet! ; 
                                   context.read<PinealCubit>().jerryVoice = savedWork.jerryVoice! ;

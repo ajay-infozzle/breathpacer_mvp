@@ -248,19 +248,19 @@ class _FirebreathingHoldScreenState extends State<FirebreathingHoldScreen> {
       cubit.playMotivation();
       // cubit.playExtra(GuideTrack.noRegret.path);
     }
-    if(minutes == 1 && seconds == 0 && cubit.durationOfSets > 60){
+    if(minutes == 1 && seconds == 0 && cubit.holdDuration > 60){
       cubit.playExtra(GuideTrack.minToGo1.path);
     }
-    else if(minutes == 2 && seconds == 0 && cubit.durationOfSets > 120){
+    else if(minutes == 2 && seconds == 0 && cubit.holdDuration > 120){
       cubit.playExtra(GuideTrack.minToGo2.path);
     }
-    else if(minutes == 3 && seconds == 0 && cubit.durationOfSets > 180){
+    else if(minutes == 3 && seconds == 0 && cubit.holdDuration > 180){
       cubit.playExtra(GuideTrack.minToGo3.path);
     }
-    else if(minutes == 4 && seconds == 0 && cubit.durationOfSets > 240){
+    else if(minutes == 4 && seconds == 0 && cubit.holdDuration > 240){
       cubit.playExtra(GuideTrack.minToGo4.path);
     }
-    else if(minutes == 5 && seconds == 0 && cubit.durationOfSets > 300){
+    else if(minutes == 5 && seconds == 0 && cubit.holdDuration > 300){
       cubit.playExtra(GuideTrack.minToGo5.path);
     }
 

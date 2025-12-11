@@ -20,8 +20,7 @@ class FirebreathingRecoveryScreen extends StatefulWidget {
       _FirebreathingRecoveryScreenState();
 }
 
-class _FirebreathingRecoveryScreenState
-    extends State<FirebreathingRecoveryScreen> {
+class _FirebreathingRecoveryScreenState extends State<FirebreathingRecoveryScreen> {
   late CountdownController countdownController;
 
   @override
@@ -56,7 +55,7 @@ class _FirebreathingRecoveryScreenState
 
     return BlocConsumer<FirebreathingCubit, FirebreathingState>(
       listener: (context, state) {
-       if (state is FirebreathingPaused) {
+        if (state is FirebreathingPaused) {
           countdownController.pause();
         } else if (state is FirebreathingResumed) {
           countdownController.resume();

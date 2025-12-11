@@ -70,6 +70,16 @@ final class PinealToggleChimes extends PinealState {
   List<Object?> get props => [chimes];
 }
 
+final class PinealPaused extends PinealState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class PinealResumed extends PinealState {
+  @override
+  List<Object?> get props => [];
+}
+
 final class PinealToggleSave extends PinealState {
   final bool saveSession;
   PinealToggleSave(this.saveSession); 
@@ -82,6 +92,6 @@ final class PinealBreathworkFetched extends PinealState {
   
 }
 
-final class ResumeHoldCounter extends PinealState {
+// final class ResumeHoldCounter extends PinealState {
   
-}
+// }

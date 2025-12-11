@@ -14,11 +14,11 @@ const interactionOptions = [
     "image": "assets/images/dna_icon.png",
     "description": "Powerful breathing technique that will energize and renew you at a cellular level, releasing stuck emotions and past trauma.  Breathe deeply and continuously through your mouth and hold your breath at the end of each set. ",
   },
-  // {
-  //   "title": "Pineal Gland Activation",
-  //   "image": "assets/images/pineal_icon.png",
-  //   "description": "Activate your pineal gland with this powerful breath.  Start by squeezing your buttocks, genitals and perineum and pulling your abdominals back to your spine.  Put the tip of your tongue on the roof of your mouth, the rough spot right behind your 2 top center teeth.  Keep your focus in the center of your brain and back slightly, in your pineal gland.   As you breath in through your nose, pull the platinum light from mother earth’s heart from your perineum up your spine and into your crown. Hold as long as you can.  Release the squeeze and exhale gently through the mouth.",
-  // },
+  {
+    "title": "Pineal Gland Activation",
+    "image": "assets/images/pineal_icon.png",
+    "description": "Activate your pineal gland with this powerful breath.  Start by squeezing your buttocks, genitals and perineum and pulling your abdominals back to your spine.  Put the tip of your tongue on the roof of your mouth, the rough spot right behind your 2 top center teeth.  Keep your focus in the center of your brain and back slightly, in your pineal gland.   As you breath in through your nose, pull the platinum light from mother earth’s heart from your perineum up your spine and into your crown. Hold as long as you can.  Release the squeeze and exhale gently through the mouth.",
+  },
 ];
 
 
@@ -129,6 +129,9 @@ enum GuideTrack{
   getReadyForNextSet("${audioAssetFile}ready_for_next_set.mp3"),
 
   dnaStart("${audioAssetFile}dna_start.mp3"),
+
+  pinealStart("${audioAssetFile}pineal_start.mp3"),
+  pinealStartNext("${audioAssetFile}pineal_start_next.mp3"),
   
   nowRecover("${audioAssetFile}now_recover.mp3"),
   timeToNextSet("${audioAssetFile}time_to_next_set.mp3"), //Todo: change
@@ -163,6 +166,8 @@ enum ImagePath{
   musicImage("${imageAssetFile}music.png"),
   chimeImage("${imageAssetFile}chime.png"),
   fireIcon("${imageAssetFile}fire_icon.png"),
+  breathInIcon("${imageAssetFile}breath_in.png"),
+  breathOutIcon("${imageAssetFile}breath_out.png"),
   breathHoldIcon("${imageAssetFile}breath_hold.png"),
   recoveryBreathIcon("${imageAssetFile}recovery_breath.png"),
   recoveryIcon("${imageAssetFile}recovery.png"),
