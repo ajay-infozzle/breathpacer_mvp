@@ -25,14 +25,12 @@ class PyramidBreathHoldScreen extends StatefulWidget {
 
 class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
   late CountdownController countdownController;
-  // late Timer _timer;
-  // int _startTime = 0;
 
   @override
   void initState() {
     super.initState();
 
-    startTimer();
+    // startTimer();
     context.read<PyramidCubit>().playVoice(GuideTrack.nowHold.path);
     countdownController = CountdownController(autoStart: true);
   }
@@ -43,50 +41,18 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     super.dispose();
   }
 
-  void startTimer() {
-    // _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-    //   setState(() {
-    //     _startTime++;
 
-    //     if (context.read<PyramidCubit>().holdDuration == -1) {
-    //       //~ ------- to start motivation when infinite hold -------
-    //       // if (_startTime % 10 == 0 && _startTime > 10) {
-    //       //   // context.read<PyramidCubit>().playHoldMotivation();
-    //       // }
-    //     }else{
+  // void stopTimer() {
+  //   try {
+  //     // _timer.cancel();
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
 
-    //       //~ ----------- play motivation -------------
-    //       // if(context.read<PyramidCubit>().holdDuration >= 20 && (context.read<PyramidCubit>().holdDuration - _startTime) > 9 ){
-    //       //   if(_startTime % 10 == 0){
-    //       //     // context.read<PyramidCubit>().playMotivation();
-    //       //     context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
-    //       //   }
-
-    //       // if( context.read<PyramidCubit>().holdDuration > 10 && (context.read<PyramidCubit>().holdDuration / 2).ceil()  == (context.read<PyramidCubit>().holdDuration - _startTime) ){
-    //       //     context.read<PyramidCubit>().playMotivation();
-    //       //     // context.read<PyramidCubit>().playExtra(GuideTrack.noRegret.path);
-    //       // }
-    //       //~ ----------- play motivation end ----------- 
-
-
-    //       //~ to start last audios
-    //       // playLastAudios();
-    //     }
-    //   });
-    // });
-  }
-
-  void stopTimer() {
-    try {
-      // _timer.cancel();
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
-  void resumeTimer() {
-    startTimer();
-  }
+  // void resumeTimer() {
+  //   startTimer();
+  // }
 
   void playLastAudios({required int min, required int sec, required bool doChange}) {
     final cubit = context.read<PyramidCubit>() ;
@@ -128,13 +94,14 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
       }
     }
     else if(min == 0 && sec == 1){
+      log(">> playing last audio min == 0 && sec == 1");
       if(cubit.breathHoldIndex == 0 && doChange == false){
-        cubit.playExtra(GuideTrack.singleBreathOut.path);
+        // cubit.playExtra(GuideTrack.singleBreathOut.path);
       }
       else if(cubit.breathHoldIndex == 1) {
         //~ only pay for last round
         if(cubit.step == cubit.currentRound.toString()){
-          cubit.playExtra(GuideTrack.singleBreathIn.path);
+          // cubit.playExtra(GuideTrack.singleBreathIn.path);
         }
         // cubit.playExtra(GuideTrack.singleBreathIn.path);
       }
@@ -167,11 +134,11 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
       listener: (context, state) {
         if (state is PyramidPaused){
           countdownController.pause();
-          stopTimer();
+          // stopTimer();
         }
         if (state is PyramidResumed){
           countdownController.resume();
-          startTimer();
+          // startTimer();
         }
       },
       builder: (context, state) {
@@ -194,7 +161,7 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
                     leading: GestureDetector(
                       onTap: () {
                         countdownController.pause();
-                        stopTimer();
+                        // stopTimer();
 
                         context.read<PyramidCubit>().resetSettings(
                           context.read<PyramidCubit>().step ?? '',
@@ -287,7 +254,7 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
                                 },
                                 interval: const Duration(seconds: 1),
                                 onFinished: () async{
-                                  stopTimer();
+                                  // stopTimer();
                                   storeScreenTime();
                                   if(context.read<PyramidCubit>().choiceOfBreathHold == BreathHoldChoice.both.name && context.read<PyramidCubit>().breathHoldIndex == 0){
                                     context.read<PyramidCubit>().breathHoldIndex = 1;
@@ -359,10 +326,17 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
         cubit.playExtra(GuideTrack.two.path);
       }
       else if(seconds == 1 && minutes == 0){
+        log(">> playing last audio seconds == 1 && minutes == 0");
         cubit.playExtra(GuideTrack.one.path);
       }
       else if(seconds == 0 && minutes == 0){
-        cubit.playExtra(GuideTrack.singleBreathOut.path);
+        if(cubit.breathHoldIndex == 0){
+          cubit.playExtra(GuideTrack.singleBreathOut.path);
+        }
+        
+        if(cubit.breathHoldIndex == 1 && cubit.step == cubit.currentRound.toString()){
+          cubit.playExtra(GuideTrack.singleBreathIn.path);
+        }
       }
     }
 
@@ -396,7 +370,7 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
         }
         context.goNamed(RoutesName.pyramidSuccessScreen);
       }else{
-        await Future.delayed(const Duration(seconds: 0), () {
+        await Future.delayed( Duration(seconds: cubit.breathHoldIndex != 1 ? 2 : 0), () {
           context.read<PyramidCubit>().updateRound();
           context.read<PyramidCubit>().playChime();
           context.goNamed(RoutesName.pyramidBreathingScreen);

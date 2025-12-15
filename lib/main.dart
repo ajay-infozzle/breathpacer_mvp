@@ -5,6 +5,7 @@ import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes.dart';
 import 'package:breathpacer_mvp/config/services/audio_services.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,19 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  WakelockPlus.enable();
   
-  final dir = await getApplicationDocumentsDirectory();
-  Hive.init(dir.path);
+  // Only enable wakelock on mobile
+  if (!kIsWeb) {
+    WakelockPlus.enable();
+  }
+
+  if (!kIsWeb) {
+    final dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+  }
+
+  // final dir = await getApplicationDocumentsDirectory();
+  // Hive.init(dir.path);
 
   runApp(const MyApp());
 }

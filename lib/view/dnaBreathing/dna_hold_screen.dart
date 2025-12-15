@@ -192,7 +192,14 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
                                       }
 
                                       cubit.playChime();
-                                      navigate(cubit);
+                                      // navigate(cubit);
+
+                                      Future.delayed(
+                                        Duration(seconds: 1),
+                                        () {
+                                          navigate(cubit);
+                                        },
+                                      );
                                     },
                                   );
 
