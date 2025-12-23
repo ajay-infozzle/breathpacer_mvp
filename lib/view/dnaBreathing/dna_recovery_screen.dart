@@ -27,7 +27,7 @@ class _DnaRecoveryScreenState extends State<DnaRecoveryScreen> {
     super.initState();
 
     countdownController = CountdownController(autoStart: true);
-    // context.read<DnaCubit>().playVoice(GuideTrack.nowRecover.path);
+    context.read<DnaCubit>().playVoice(GuideTrack.nowRecover.path);
   }
 
   void storeScreenTime() {

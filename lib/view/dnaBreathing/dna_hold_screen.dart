@@ -185,17 +185,17 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
                                         //null
                                       }
                                       else if(cubit.recoveryBreath){
-                                        await cubit.playExtra(GuideTrack.nowRecover.path);
+                                        // await cubit.playExtra(GuideTrack.nowRecover.path);
                                       } 
                                       else if(cubit.currentSet != cubit.noOfSets){
-                                        await cubit.playExtra(GuideTrack.timeToNextSet.path);
+                                        // await cubit.playExtra(GuideTrack.timeToNextSet.path);
                                       }
 
-                                      cubit.playChime();
+                                      // cubit.playChime();
                                       // navigate(cubit);
 
                                       Future.delayed(
-                                        Duration(seconds: 1),
+                                        Duration(seconds: (cubit.breathHoldIndex == 1 && !cubit.recoveryBreath) ? 0 : ( (cubit.breathHoldIndex == 0 && cubit.choiceOfBreathHold == BreathHoldChoice.both.name) ?0:1) ),
                                         () {
                                           navigate(cubit);
                                         },
@@ -241,14 +241,18 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
     else{ 
       if(cubit.currentSet == cubit.noOfSets) {
         if (cubit.recoveryBreath) {
+          cubit.playChime();
           context.goNamed(RoutesName.dnaRecoveryScreen);
         } else {
           await context.read<DnaCubit>().audio.stopAll();
+          cubit.playChime();
           context.goNamed(RoutesName.dnaSuccessScreen);
         }
       } else if (cubit.recoveryBreath) {
+        cubit.playChime();
         context.goNamed(RoutesName.dnaRecoveryScreen);
       } else {
+        cubit.playChime();
         cubit.updateRound();
         context.pushReplacementNamed(RoutesName.dnaBreathingScreen);
       }
@@ -270,19 +274,19 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
       // cubit.playMotivation();
       cubit.playExtra(GuideTrack.motivation_2_1.path);
     }
-    if(minutes == 1 && seconds == 0 && cubit.durationOfSet > 60){
+    if(minutes == 1 && seconds == 0 && cubit.holdDuration > 60){
       cubit.playExtra(GuideTrack.minToGo1.path);
     }
-    else if(minutes == 2 && seconds == 0 && cubit.durationOfSet > 120){
+    else if(minutes == 2 && seconds == 0 && cubit.holdDuration > 120){
       cubit.playExtra(GuideTrack.minToGo2.path);
     }
-    else if(minutes == 3 && seconds == 0 && cubit.durationOfSet > 180){
+    else if(minutes == 3 && seconds == 0 && cubit.holdDuration > 180){
       cubit.playExtra(GuideTrack.minToGo3.path);
     }
-    else if(minutes == 4 && seconds == 0 && cubit.durationOfSet > 240){
+    else if(minutes == 4 && seconds == 0 && cubit.holdDuration > 240){
       cubit.playExtra(GuideTrack.minToGo4.path);
     }
-    else if(minutes == 5 && seconds == 0 && cubit.durationOfSet > 300){
+    else if(minutes == 5 && seconds == 0 && cubit.holdDuration > 300){
       cubit.playExtra(GuideTrack.minToGo5.path);
     }
 
@@ -303,15 +307,27 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
     else if(seconds == 9 && minutes == 0 && cubit.holdDuration > 10){
       // cubit.playMotivation();
     }
-    else if(seconds == 5 && minutes == 0){
+    else if(seconds == ((cubit.recoveryBreath||cubit.choiceOfBreathHold == BreathHoldChoice.both.name)?5:6) && minutes == 0){
       //~ if hold is in-breath 
-      if(cubit.choiceOfBreathHold == BreathHoldChoice.breatheIn.name){
+      if(cubit.breathHoldIndex == 0){
+        if(cubit.recoveryBreath || cubit.choiceOfBreathHold == BreathHoldChoice.both.name){
+          cubit.playVoice(GuideTrack.getReadyToBreathOut.path);
+        }else{
+          cubit.playExtra(GuideTrack.breathOutNext.path);
+        }
         // cubit.playVoice(GuideTrack.getReadyToBreathOut.path);
+        // cubit.playExtra(GuideTrack.breathOutNext.path);
       }
 
       //~ if hold is out-breath 
-      else if(cubit.choiceOfBreathHold == BreathHoldChoice.breatheOut.name){
+      else if(cubit.breathHoldIndex == 1){
+        if(cubit.recoveryBreath){
+          cubit.playVoice(GuideTrack.getReadyToBreathIn.path);
+        }else{
+          cubit.playExtra(GuideTrack.breathInNext.path);
+        }
         // cubit.playVoice(GuideTrack.getReadyToBreathIn.path);
+        // cubit.playExtra(GuideTrack.breathInNext.path);
       }
     }
     else if(seconds == 3 && minutes == 0){
@@ -325,14 +341,14 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
     }
     else if(seconds == 0 && minutes == 0){
       //~ if hold is in-breath 
-      // if(cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2 ){
-      if( (cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2) && cubit.choiceOfBreathHold == BreathHoldChoice.both.name ){
+      if(cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2 ){
+      // if( (cubit.breathHoldIndex == 0 || cubit.breathHoldIndex == 2) && cubit.choiceOfBreathHold == BreathHoldChoice.both.name ){
         cubit.playExtra(GuideTrack.singleBreathOut.path);
       }
 
       //~ if hold is out-breath 
-      else if(cubit.breathHoldIndex == 1){
-        // cubit.playExtra(GuideTrack.singleBreathIn.path);
+      else if(cubit.breathHoldIndex == 1 && cubit.recoveryBreath){
+        cubit.playExtra(GuideTrack.singleBreathIn.path);
       }
     }
 

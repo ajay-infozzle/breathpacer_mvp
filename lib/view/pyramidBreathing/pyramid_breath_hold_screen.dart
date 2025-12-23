@@ -361,16 +361,17 @@ class _PyramidBreathHoldScreenState extends State<PyramidBreathHoldScreen> {
     } 
     else{
       if(cubit.step == cubit.currentRound.toString()){
-        await context.read<PyramidCubit>().audio.stopAll();
-        context.read<PyramidCubit>().playChime();
 
-
-        if (kDebugMode) {
-          print("pyramid rounds finished");
-        }
-        context.goNamed(RoutesName.pyramidSuccessScreen);
+        await Future.delayed( Duration(seconds: 1), () async{
+          await context.read<PyramidCubit>().audio.stopAll();
+          context.read<PyramidCubit>().playChime();
+          if (kDebugMode) {
+            print("pyramid rounds finished");
+          }
+          context.goNamed(RoutesName.pyramidSuccessScreen);
+        },);
       }else{
-        await Future.delayed( Duration(seconds: cubit.breathHoldIndex != 1 ? 2 : 0), () {
+        await Future.delayed( Duration(seconds: cubit.breathHoldIndex != 1 ? 1 : 0), () {
           context.read<PyramidCubit>().updateRound();
           context.read<PyramidCubit>().playChime();
           context.goNamed(RoutesName.pyramidBreathingScreen);

@@ -7,17 +7,17 @@ const interactionOptions = [
   {
     "title": "Fire Breathing",
     "image": "assets/images/fire_icon.png",
-    "description": "Release toxins and chemicals from the cells in your body. Enhance mental clarity. Start your day with this powerful activator.  Do it anytime you need a boost of energy. Fire Breathing is an intense rapid breathing exercises done through the nose.  Inhale deeply through your nose and exhale forcefully through your nose in a continuous steady pace.  At the end of the set hold your breath and recover.",
+    "description": "Let go of toxins and chemicals from the cells in your body. Enhance mental clarity. Start your day with this powerful activator.  Do it anytime you need a boost of energy. Fire Breathing is an intense rapid breathing exercise done through the nose.  Inhale deeply through your nose and exhale forcefully through your nose in a continuous steady pace.  At the end of the set hold your breath and recover.",
   },
   {
     "title": "DNA Breathing",
     "image": "assets/images/dna_icon.png",
-    "description": "Powerful breathing technique that will energize and renew you at a cellular level, releasing stuck emotions and past trauma.  Breathe deeply and continuously through your mouth and hold your breath at the end of each set. ",
+    "description": "Powerful breathing technique that will energize and renew you at a cellular level  by targeting stuck emotions and past trauma.  Breathe deeply and continuously through your mouth and hold your breath at the end of each set. ",
   },
   {
     "title": "Pineal Gland Activation",
     "image": "assets/images/pineal_icon.png",
-    "description": "Activate your pineal gland with this powerful breath.  Start by squeezing your buttocks, genitals and perineum and pulling your abdominals back to your spine.  Put the tip of your tongue on the roof of your mouth, the rough spot right behind your 2 top center teeth.  Keep your focus in the center of your brain and back slightly, in your pineal gland.   As you breath in through your nose, pull the platinum light from mother earth’s heart from your perineum up your spine and into your crown. Hold as long as you can.  Release the squeeze and exhale gently through the mouth.",
+    "description": "Activate your pineal gland with this powerful breath.  Start by squeezing your buttocks, genitals and perineum and pulling your abdominals back to your spine.  Put the tip of your tongue on the roof of your mouth, the rough spot right behind your 2 top center teeth.  Keep your focus in the center of your brain and back slightly, in your pineal gland.   As you breathe in through your nose, pull the platinum light from mother earth’s heart from your perineum up your spine and into your crown. Hold as long as you can.  Let go of the squeeze and exhale gently through the mouth.",
   },
 ];
 
