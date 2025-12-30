@@ -15,7 +15,7 @@ class DnaBreathingTimeWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Total Dna breathing time:',
           content: getTotalTimeString(context.read<DnaCubit>().breathingTimeList),
-          iconPath: "assets/images/time.png",
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,

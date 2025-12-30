@@ -23,7 +23,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Speed:',
           content: context.read<DnaCubit>().speed,
-          iconPath: "assets/images/time.png",
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -37,7 +37,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'No. of sets:',
           content: context.read<DnaCubit>().noOfSets.toString(),
-          iconPath: "assets/images/time.png",
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -51,7 +51,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Breathing approach:',
           content: context.read<DnaCubit>().breathingApproachGroupValue,
-          iconPath: "assets/images/breath_hold.png",
+          iconPath: ImagePath.breathHoldIcon.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -65,7 +65,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Duration of each set:',
           content: getFormattedTime(context.read<DnaCubit>().durationOfSet),
-          iconPath: "assets/images/time.png",
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -81,7 +81,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Breathe per set:',
           content: context.read<DnaCubit>().noOfBreath.toString(),
-          iconPath: "assets/images/time.png",
+          iconPath: ImagePath.timeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -95,7 +95,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Jerry's voice:",
           content: context.read<DnaCubit>().jerryVoice ?"Yes" : "No",
-          iconPath: "assets/images/voice.png",
+          iconPath: ImagePath.voiceImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -109,7 +109,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Music:",
           content: context.read<DnaCubit>().music ?"Yes" : "No",
-          iconPath: "assets/images/music.png",
+          iconPath: ImagePath.musicImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -122,7 +122,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Recovery breath duration:',
           content: getTotalTimeString(context.read<DnaCubit>().recoveryTimeList),
-          iconPath: "assets/images/recovery.png",
+          iconPath: ImagePath.recoveryIcon.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -135,7 +135,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Chimes at start/stop points:",
           content: context.read<DnaCubit>().chimes ?"Yes" : "No",
-          iconPath: "assets/images/chime.png",
+          iconPath: ImagePath.chimeImage.path,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -149,7 +149,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         // ResultContainerSectionWidget(
         //   title: "Pineal Gland:",
         //   content: context.read<DnaCubit>().pineal ?"Yes" : "No",
-        //   iconPath: "assets/images/pineal_1.png",
+        //   iconPath: "assets/images/pineal_1",
         //   iconSize: 25.0,
         //   showIcon: true,
         //   showContent: true,

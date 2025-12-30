@@ -76,7 +76,6 @@ class _DisclamerScreenState extends State<DisclamerScreen> {
                         alignment: Alignment.center,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                          // backgroundImage: AssetImage("assets/images/instruction_dummy.png"),
                           backgroundImage: AssetImage(ImagePath.jerryImage.path),
                           radius: 100,
                         ),

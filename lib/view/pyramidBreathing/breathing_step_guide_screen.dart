@@ -38,7 +38,7 @@ class BreathingStepGuideScreen extends StatelessWidget {
               width: size,
               child: CircleAvatar(
                 radius: size*0.075,
-                child: Image.asset("assets/images/pyramid_icon.png"),
+                child: Image.asset(ImagePath.pyramidIcon.path),
               ),
             ),
             
