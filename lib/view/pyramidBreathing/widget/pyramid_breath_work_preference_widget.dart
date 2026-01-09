@@ -1,6 +1,6 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
-import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/view/widget/result_container_section_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +10,8 @@ class PyramidBreathWorkPreferenceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
+
     return Column(
       children: [
         ResultContainerSectionWidget(
@@ -23,7 +25,7 @@ class PyramidBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Speed:',
           content: context.read<PyramidCubit>().speed,
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -36,7 +38,7 @@ class PyramidBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Jerry's voice:",
           content: context.read<PyramidCubit>().jerryVoice ?"Yes" : "No",
-          iconPath: ImagePath.voiceImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.voiceImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -50,7 +52,7 @@ class PyramidBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Music:",
           content: context.read<PyramidCubit>().music ?"Yes" : "No",
-          iconPath: ImagePath.musicImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.musicImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -64,7 +66,7 @@ class PyramidBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Chimes at start/stop points:",
           content: context.read<PyramidCubit>().chimes ?"Yes" : "No",
-          iconPath: ImagePath.chimeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.chimeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -78,7 +80,7 @@ class PyramidBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Choice of breath hold:",
           content: context.read<PyramidCubit>().choiceOfBreathHold,
-          iconPath: context.read<PyramidCubit>().breathHoldIndex == 0 ? ImagePath.holdImage.path : ImagePath.holdImage.path,
+          iconPath: context.read<PyramidCubit>().breathHoldIndex == 0 ? contentCubit.imagePath+contentCubit.images.holdImage! : contentCubit.imagePath+contentCubit.images.holdImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,

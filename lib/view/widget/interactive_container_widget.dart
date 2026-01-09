@@ -1,8 +1,13 @@
+import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
+import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
+import 'package:breathpacer_mvp/view/dnaBreathing/widget/dna_saved_work_dialog_widget.dart';
 import 'package:breathpacer_mvp/view/fireBreathing/widget/fire_saved_works_dialog_widget.dart';
+import 'package:breathpacer_mvp/view/pinealGlandActivation/widget/pineal_saved_work_dialog_widget.dart';
 import 'package:breathpacer_mvp/view/pyramidBreathing/widget/pyramid_saved_works_dialog_widget.dart';
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,7 +70,11 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
         children: [
           CircleAvatar(
             radius: size*0.05,
-            backgroundImage: AssetImage(widget.image)
+            // backgroundImage: AssetImage(widget.image)
+            backgroundImage: CachedNetworkImageProvider(
+              widget.image,
+              cacheKey: widget.image
+            ),
           ),
           SizedBox(width: size*0.03,),
           Expanded(
@@ -73,7 +82,7 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
               widget.title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.black.withOpacity(.7),
+                color: Colors.black..withValues(alpha:.7),
                 fontSize: size*0.05
               ),
               overflow: TextOverflow.ellipsis,
@@ -88,7 +97,7 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
     return Text(
       widget.description,
       style: TextStyle(
-        color: Colors.black.withOpacity(.4),
+        color: Colors.black.withValues(alpha:.4),
         fontSize: size*0.035,
         fontWeight: FontWeight.bold
       ),
@@ -119,12 +128,12 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
       case 1:
         total = context.read<FirebreathingCubit>().savedBreathwork.length; 
         break;
-      // case 2:
-      //   total = context.read<DnaCubit>().savedBreathwork.length; 
-      //   break;
-      // case 3:
-      //   total = context.read<PinealCubit>().savedBreathwork.length;
-      //   break;
+      case 2:
+        total = context.read<DnaCubit>().savedBreathwork.length; 
+        break;
+      case 3:
+        total = context.read<PinealCubit>().savedBreathwork.length;
+        break;
     }
 
     return total < 1
@@ -168,10 +177,10 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
         return const PyramidSavedWorksDialogWidget();
       case 1:
         return const FirebreathingSavedWorksDialogWidget();
-      // case 2:
-      //   return const DnaSavedWorkDialogWidget();
-      // case 3:
-      //   return const PinealSavedWorkDialogWidget();
+      case 2:
+        return const DnaSavedWorkDialogWidget();
+      case 3:
+        return const PinealSavedWorkDialogWidget();
     }
   }
 
@@ -182,18 +191,18 @@ class _InteractiveContainerWidgetState extends State<InteractiveContainerWidget>
         return BlocBuilder<PyramidCubit, PyramidState>(
           builder: (context, state) => savedWorks(context),
         );
-      // case 1:
-      //   return BlocBuilder<FirebreathingCubit, FirebreathingState>(
-      //     builder: (context, state) => savedWorks(context),
-      //   );
-      // case 2:
-      //   return BlocBuilder<DnaCubit, DnaState>(
-      //     builder: (context, state) => savedWorks(context),
-      //   );
-      // case 3:
-      //   return BlocBuilder<PinealCubit, PinealState>(
-      //     builder: (context, state) => savedWorks(context),
-      //   );
+      case 1:
+        return BlocBuilder<FirebreathingCubit, FirebreathingState>(
+          builder: (context, state) => savedWorks(context),
+        );
+      case 2:
+        return BlocBuilder<DnaCubit, DnaState>(
+          builder: (context, state) => savedWorks(context),
+        );
+      case 3:
+        return BlocBuilder<PinealCubit, PinealState>(
+          builder: (context, state) => savedWorks(context),
+        );
       default:
         return const SizedBox();
     }

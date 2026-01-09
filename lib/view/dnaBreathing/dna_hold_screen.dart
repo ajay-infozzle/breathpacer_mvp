@@ -1,11 +1,13 @@
 
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/services/audio_services.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,6 +59,7 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     double size = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -148,7 +151,11 @@ class _DnaHoldScreenState extends State<DnaHoldScreen> {
                           alignment: Alignment.center,
                           child: CircleAvatar(
                             radius: size * 0.3,
-                            child: Image.asset(ImagePath.holdImage.path),
+                            // child: Image.asset(contentCubit.imagePath+contentCubit.images.holdImage!),
+                            child: CachedNetworkImage(
+                              imageUrl: contentCubit.imagePath+contentCubit.images.holdImage!,
+                              cacheKey: contentCubit.imagePath+contentCubit.images.holdImage!,
+                            ),
                           ),
                         ),
 

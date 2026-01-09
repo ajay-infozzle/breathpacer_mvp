@@ -1,10 +1,10 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
-import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/view/widget/interactive_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +32,8 @@ class _InteractiveBreathingScreenState extends State<InteractiveBreathingScreen>
 
   @override
   Widget build(BuildContext context) {
-    final double size = MediaQuery.of(context).size.width ;    
+    final double size = MediaQuery.of(context).size.width ;   
+    final contentCubit = context.read<ContentCubit>() ; 
 
     return PopScope(
       canPop: false,
@@ -90,16 +91,16 @@ class _InteractiveBreathingScreenState extends State<InteractiveBreathingScreen>
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: const EdgeInsetsDirectional.all(0),
-                        itemCount: interactionOptions.length+1,
+                        itemCount: contentCubit.interactionOptions.length+1,
                         itemBuilder: (context, index) {
-                          if(index == interactionOptions.length){
+                          if(index == contentCubit.interactionOptions.length){
                             return SizedBox(height: size*0.06,);
                           }
                           return InteractiveContainerWidget(
                             index: index,
-                            title: interactionOptions[index]["title"]!, 
-                            image: interactionOptions[index]["image"]!, 
-                            description: interactionOptions[index]["description"]!,
+                            title: contentCubit.interactionOptions[index].title!, 
+                            image: contentCubit.imagePath+contentCubit.interactionOptions[index].image!, 
+                            description: contentCubit.interactionOptions[index].description!,
                             onTap: (){
                               if(index == 0){
                                 context.pushNamed(RoutesName.breathingStepGuideScreen);
@@ -156,7 +157,7 @@ class _InteractiveBreathingScreenState extends State<InteractiveBreathingScreen>
                             padding: const EdgeInsets.all(0),
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: faq.length,
+                            itemCount: contentCubit.faq.length,
                             itemBuilder: (context, index) {
                               return Container(
                                 margin: EdgeInsets.only(bottom: size*0.03),
@@ -174,8 +175,8 @@ class _InteractiveBreathingScreenState extends State<InteractiveBreathingScreen>
                                     fontWeight: FontWeight.bold,
                                     fontSize: size*0.038
                                   ),
-                                  question: faq[index]["ques"]!, 
-                                  answer: faq[index]["ans"]!
+                                  question: contentCubit.faq[index].ques!, 
+                                  answer: contentCubit.faq[index].ans!
                                 ),
                               );
                             }, 

@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
@@ -6,6 +7,7 @@ import 'package:breathpacer_mvp/view/pinealGlandActivation/widget/pineal_work_pr
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:breathpacer_mvp/view/widget/restart_breathing_widget.dart';
 import 'package:breathpacer_mvp/view/widget/save_custom_dialog_box_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,6 +32,7 @@ class _PinealSuccessScreenState extends State<PinealSuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     double size = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -87,7 +90,11 @@ class _PinealSuccessScreenState extends State<PinealSuccessScreen> {
                           alignment: Alignment.center,
                           child: CircleAvatar(
                             radius: size*0.12,
-                            child: Image.asset(ImagePath.completionIcon.path),
+                            // child: Image.asset(contentCubit.imagePath+contentCubit.images.completionIcon!),
+                            child: CachedNetworkImage(
+                              imageUrl: contentCubit.imagePath+contentCubit.images.completionIcon!,
+                              cacheKey: contentCubit.imagePath+contentCubit.images.completionIcon!, 
+                            ),
                           ),
                         ),
                     

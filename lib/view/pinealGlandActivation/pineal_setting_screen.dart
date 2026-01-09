@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
@@ -6,6 +7,7 @@ import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:breathpacer_mvp/view/widget/custom_modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/settings_toggle_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +20,7 @@ class PinealSettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     final size = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -83,7 +86,11 @@ class PinealSettingScreen extends StatelessWidget {
                             width: size,
                             child: CircleAvatar(
                               radius: size * 0.12,
-                              child: Image.asset(ImagePath.pinealIcon.path),
+                              // child: Image.asset(contentCubit.imagePath+contentCubit.images.pinealIcon!),
+                              child: CachedNetworkImage(
+                                imageUrl: contentCubit.imagePath+contentCubit.images.pinealIcon!,
+                                cacheKey: contentCubit.imagePath+contentCubit.images.pinealIcon!, 
+                              ),
                             ),
                           ),
 

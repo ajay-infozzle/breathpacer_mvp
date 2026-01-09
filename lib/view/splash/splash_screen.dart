@@ -1,8 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
+// import 'package:breathpacer_mvp/utils/constant/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -75,9 +78,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
   void navigateToHome(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 1),() {
-      // context.goNamed(RoutesName.homeScreen);
-      context.goNamed(RoutesName.disclamerScreen);
-    },);
+    await context.read<ContentCubit>().loadContents().then(
+      (isLoaded){
+        if(isLoaded){
+          // showToast("loaded");
+          context.goNamed(RoutesName.disclamerScreen);
+        }else{
+          // showToast("Something went wrong");
+        }
+      }
+    );
+
+    // await Future.delayed(const Duration(seconds: 1),() {
+    //   // context.goNamed(RoutesName.homeScreen);
+    //   context.goNamed(RoutesName.disclamerScreen);
+    // },);
   }
 }

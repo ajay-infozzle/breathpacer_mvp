@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
@@ -10,6 +11,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     return Column(
       children: [
         ResultContainerSectionWidget(
@@ -23,7 +25,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Speed:',
           content: context.read<DnaCubit>().speed,
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -37,7 +39,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'No. of sets:',
           content: context.read<DnaCubit>().noOfSets.toString(),
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -51,7 +53,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Breathing approach:',
           content: context.read<DnaCubit>().breathingApproachGroupValue,
-          iconPath: ImagePath.breathHoldIcon.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.breathHoldIcon!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -65,7 +67,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Duration of each set:',
           content: getFormattedTime(context.read<DnaCubit>().durationOfSet),
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -81,7 +83,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Breathe per set:',
           content: context.read<DnaCubit>().noOfBreath.toString(),
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -95,7 +97,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Jerry's voice:",
           content: context.read<DnaCubit>().jerryVoice ?"Yes" : "No",
-          iconPath: ImagePath.voiceImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.voiceImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -109,7 +111,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Music:",
           content: context.read<DnaCubit>().music ?"Yes" : "No",
-          iconPath: ImagePath.musicImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.musicImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -122,7 +124,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'Recovery breath duration:',
           content: getTotalTimeString(context.read<DnaCubit>().recoveryTimeList),
-          iconPath: ImagePath.recoveryIcon.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.recoveryIcon!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,
@@ -135,7 +137,7 @@ class DnaBreathWorkPreferenceWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: "Chimes at start/stop points:",
           content: context.read<DnaCubit>().chimes ?"Yes" : "No",
-          iconPath: ImagePath.chimeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.chimeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,

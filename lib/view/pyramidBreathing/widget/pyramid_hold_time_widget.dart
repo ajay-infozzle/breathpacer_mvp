@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
@@ -10,6 +11,7 @@ class PyramidHoldTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
 
     return Column(
       children: [
@@ -17,7 +19,7 @@ class PyramidHoldTimeWidget extends StatelessWidget {
         ResultContainerSectionWidget(
           title: 'In-breath holding time:',
           content: getTotalTimeString(context.read<PyramidCubit>().holdInbreathTimeList),
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,

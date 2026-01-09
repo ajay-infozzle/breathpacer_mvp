@@ -1,8 +1,10 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
-import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -32,6 +34,7 @@ class _DisclamerScreenState extends State<DisclamerScreen> {
   @override
   Widget build(BuildContext context) {
     final double size = MediaQuery.of(context).size.width ; 
+    final contentCubit = context.read<ContentCubit>() ;
 
     return PopScope(
       canPop: false,
@@ -76,7 +79,11 @@ class _DisclamerScreenState extends State<DisclamerScreen> {
                         alignment: Alignment.center,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                          backgroundImage: AssetImage(ImagePath.jerryImage.path),
+                          // backgroundImage: AssetImage(contentCubit.imagePath+contentCubit.images.jerryImage!),
+                          backgroundImage: CachedNetworkImageProvider(
+                            contentCubit.imagePath+contentCubit.images.jerryImage!,
+                            cacheKey: contentCubit.imagePath+contentCubit.images.jerryImage!
+                          ),
                           radius: 100,
                         ),
                       ),
@@ -101,7 +108,7 @@ class _DisclamerScreenState extends State<DisclamerScreen> {
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: size*0.03,),
-                            descriptionSection(size, noteFromJerry)
+                            descriptionSection(size, contentCubit.noteFromJerry)
                           ],
                         )
                       ),
@@ -127,7 +134,7 @@ class _DisclamerScreenState extends State<DisclamerScreen> {
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: size*0.03,),
-                            descriptionSection(size, doYouReallyWantToActivateYourSuperhumanPotential)
+                            descriptionSection(size, contentCubit.doYouReallyWantToActivateYourSuperhumanPotential)
                           ],
                         )
                       ),

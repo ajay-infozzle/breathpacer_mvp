@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ResultContainerSectionWidget extends StatelessWidget {
@@ -37,11 +38,17 @@ class ResultContainerSectionWidget extends StatelessWidget {
           if (showIcon)
             Container(
               margin: EdgeInsets.only(right: size.width*0.02),
-              child: Image.asset(
-                iconPath!,
+              // child: Image.asset(
+              //   iconPath!,
+              //   width: iconSize,
+              //   height: iconSize,
+              //   // color: iconColor,
+              // ),
+              child: CachedNetworkImage(
+                imageUrl: iconPath ?? "",
+                cacheKey: iconPath, 
                 width: iconSize,
                 height: iconSize,
-                // color: iconColor,
               ),
             ),
           

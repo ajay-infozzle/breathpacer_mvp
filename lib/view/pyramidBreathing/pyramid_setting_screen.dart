@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
@@ -7,6 +8,7 @@ import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:breathpacer_mvp/view/widget/custom_modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/settings_toggle_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -56,6 +58,8 @@ class _PyramidSettingScreenState extends State<PyramidSettingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
+
     return PopScope(
       canPop: context.read<PyramidCubit>().isReatartEnable?false:true,
       onPopInvoked: (didPop) {
@@ -116,7 +120,8 @@ class _PyramidSettingScreenState extends State<PyramidSettingScreen>
                             width: size,
                             child: CircleAvatar(
                               radius: size * 0.12,
-                              child: Image.asset(ImagePath.pyramidIcon.path),
+                              // child: Image.asset(contentCubit.imagePath+contentCubit.images.pyramidIcon!),
+                              child: CachedNetworkImage(imageUrl: contentCubit.imagePath+contentCubit.images.pyramidIcon!, cacheKey: contentCubit.imagePath+contentCubit.images.pyramidIcon!,),
                             ),
                           ),
                       

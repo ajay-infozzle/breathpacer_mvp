@@ -1,8 +1,10 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pyramid/pyramid_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:breathpacer_mvp/view/widget/result_container_section_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,6 +31,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     return BlocBuilder<PyramidCubit, PyramidState>(
       builder: (context, state) {
         return Container(
@@ -72,7 +75,8 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         margin: EdgeInsets.only(right: size*0.02),
                         child: CircleAvatar(
                           radius: size*0.042,
-                          child: Image.asset(ImagePath.pyramidIcon.path),
+                          // child: Image.asset(contentCubit.imagePath+contentCubit.images.pyramidIcon!),
+                          child: CachedNetworkImage(imageUrl: contentCubit.imagePath+contentCubit.images.pyramidIcon!, cacheKey: contentCubit.imagePath+contentCubit.images.pyramidIcon!,),
                         ),
                       ),
                       Text(
@@ -134,7 +138,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: 'Speed:',
                           content: context.read<PyramidCubit>().savedBreathwork[i].speed,
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -146,7 +150,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: "Jerry's voice:",
                           content: context.read<PyramidCubit>().savedBreathwork[i].jerryVoice! ?"Yes" : "No",
-                          iconPath: ImagePath.voiceImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.voiceImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -158,7 +162,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: "Music:",
                           content: context.read<PyramidCubit>().savedBreathwork[i].music! ?"Yes" : "No",
-                          iconPath: ImagePath.musicImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.musicImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -170,7 +174,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: "Chimes at start/stop points:",
                           content: context.read<PyramidCubit>().savedBreathwork[i].chimes! ?"Yes" : "No",
-                          iconPath: ImagePath.chimeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.chimeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -182,7 +186,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: "Choice of breath hold:",
                           content: context.read<PyramidCubit>().savedBreathwork[i].choiceOfBreathHold,
-                          iconPath: ImagePath.breathHoldIcon.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.breathHoldIcon!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -206,7 +210,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: 'Total breathing time:',
                           content: getTotalTimeString(context.read<PyramidCubit>().savedBreathwork[i].breathingTimeList!),
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -219,7 +223,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: 'Out-Breath hold time:',
                           content: getTotalTimeString(context.read<PyramidCubit>().savedBreathwork[i].holdBreathOutTimeList!),
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -232,7 +236,7 @@ class _PyramidSavedWorksDialogWidgetState extends State<PyramidSavedWorksDialogW
                         ResultContainerSectionWidget(
                           title: 'In-Breath hold time:',
                           content: getTotalTimeString(context.read<PyramidCubit>().savedBreathwork[i].holdBreathInTimeList!),
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,

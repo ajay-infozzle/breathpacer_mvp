@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
@@ -8,6 +9,7 @@ import 'package:breathpacer_mvp/view/widget/custom_modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/custom_radio_buttom.dart';
 import 'package:breathpacer_mvp/view/widget/modal_dropdown.dart';
 import 'package:breathpacer_mvp/view/widget/settings_toggle_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +59,7 @@ class _DnaSettingScreenState extends State<DnaSettingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     return PopScope(
       canPop: context.read<DnaCubit>().isReatartEnable?false:true,
       onPopInvoked: (didPop) {
@@ -117,7 +120,11 @@ class _DnaSettingScreenState extends State<DnaSettingScreen>
                             width: size,
                             child: CircleAvatar(
                               radius: size * 0.12,
-                              child: Image.asset(ImagePath.dnaIcon.path),
+                              // child: Image.asset(contentCubit.imagePath+contentCubit.images.dnaIcon!),
+                              child: CachedNetworkImage(
+                                imageUrl:contentCubit.imagePath+contentCubit.images.dnaIcon!,
+                                cacheKey: contentCubit.imagePath+contentCubit.images.dnaIcon!, 
+                              ),
                             ),
                           ),
                                       

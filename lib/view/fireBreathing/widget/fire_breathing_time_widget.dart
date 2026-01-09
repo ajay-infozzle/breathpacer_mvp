@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
 import 'package:breathpacer_mvp/config/theme.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
@@ -10,12 +11,13 @@ class FireBreathingTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
     return Column(
       children: [
         ResultContainerSectionWidget(
           title: 'Total Fire breathing time:',
           content: getTotalTimeString(context.read<FirebreathingCubit>().breathingTimeList),
-          iconPath: ImagePath.timeImage.path,
+          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
           iconSize: 25.0,
           showIcon: true,
           showContent: true,

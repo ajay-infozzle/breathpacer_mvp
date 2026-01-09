@@ -1,3 +1,4 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/dna/dna_cubit.dart';
 import 'package:breathpacer_mvp/bloc/firebreathing/firebreathing_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
     final AudioOrchestrator audioOrchestrator = AudioOrchestrator();
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => ContentCubit()),
         BlocProvider(create: (context) => PyramidCubit(audioOrchestrator)),
         BlocProvider(create: (context) => FirebreathingCubit(audioOrchestrator)),
         BlocProvider(create: (context) => DnaCubit(audioOrchestrator)),

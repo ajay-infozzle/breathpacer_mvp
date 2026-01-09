@@ -1,8 +1,10 @@
+import 'package:breathpacer_mvp/bloc/content/content_cubit.dart';
 import 'package:breathpacer_mvp/bloc/pineal/pineal_cubit.dart';
 import 'package:breathpacer_mvp/config/router/routes_name.dart';
 import 'package:breathpacer_mvp/utils/constant/interaction_breathing_constant.dart';
 import 'package:breathpacer_mvp/view/widget/custom_button.dart';
 import 'package:breathpacer_mvp/view/widget/result_container_section_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +30,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
 
   @override
   Widget build(BuildContext context) {
+    final contentCubit = context.read<ContentCubit>();
 
     return BlocBuilder<PinealCubit, PinealState>(
       builder: (context, state) {
@@ -72,7 +75,11 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         margin: EdgeInsets.only(right: size*0.02),
                         child: CircleAvatar(
                           radius: size*0.042,
-                          child: Image.asset(ImagePath.pinealIcon.path),
+                          // child: Image.asset(contentCubit.imagePath+contentCubit.images.pinealIcon!),
+                          child: CachedNetworkImage(
+                            imageUrl: contentCubit.imagePath+contentCubit.images.pinealIcon!,
+                            cacheKey: contentCubit.imagePath+contentCubit.images.pinealIcon!, 
+                          ),
                         ),
                       ),
                       Text(
@@ -134,7 +141,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: 'No. of sets:',
                           content: context.read<PinealCubit>().savedBreathwork[i].numberOfSets,
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -147,7 +154,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: 'Breathing period:',
                           content: getFormattedTime(context.read<PinealCubit>().savedBreathwork[i].breathingPeriod!),
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -159,7 +166,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: "Jerry's voice:",
                           content: context.read<PinealCubit>().savedBreathwork[i].jerryVoice! ?"Yes" : "No",
-                          iconPath: ImagePath.voiceImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.voiceImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -171,7 +178,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: "Music:",
                           content: context.read<PinealCubit>().savedBreathwork[i].music! ?"Yes" : "No",
-                          iconPath: ImagePath.musicImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.musicImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -183,7 +190,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: "Chimes at start/stop points:",
                           content: context.read<PinealCubit>().savedBreathwork[i].chimes! ?"Yes" : "No",
-                          iconPath: ImagePath.chimeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.chimeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -209,7 +216,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: 'Hold time per set:',
                           content: context.read<PinealCubit>().savedBreathwork[i].holdTimePerSet ==-1 ?"Infineite" : context.read<PinealCubit>().savedBreathwork[i].holdTimePerSet.toString(),
-                          iconPath: ImagePath.timeImage.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.timeImage!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
@@ -221,7 +228,7 @@ class _PinealSavedWorkDialogWidgetState extends State<PinealSavedWorkDialogWidge
                         ResultContainerSectionWidget(
                           title: 'Recovery breath per set:',
                           content: context.read<PinealCubit>().savedBreathwork[i].recoveryTimePerSet.toString(),
-                          iconPath: ImagePath.recoveryIcon.path,
+                          iconPath: contentCubit.imagePath+contentCubit.images.recoveryIcon!,
                           iconSize: 25.0,
                           showIcon: true,
                           showContent: true,
